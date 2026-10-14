@@ -10,15 +10,17 @@ import {
   CreditCard,
   RefreshCw,
   CheckCircle2,
+  FileText,
 } from 'lucide-react'
 import { projectsData } from '../data/projectsData'
+import ScrollReveal from './ScrollReveal'
 
 // Visual Mockup Component customized for each flagship project
 function ProjectMockup({ type }) {
   // 1. Sahaay (सहाय) — On-Device ISL Bridge
   if (type === 'sahaay') {
     return (
-      <div className="w-full h-44 sm:h-48 bg-[#111827] rounded-t-[6px] p-4 flex flex-col justify-between border-b-2 border-[#111827] relative overflow-hidden text-white">
+      <div className="w-full h-44 sm:h-48 bg-[#111827] rounded-t-[6px] p-4 flex flex-col justify-between border-b-2 border-[#111827] dark:border-white/20 relative overflow-hidden text-white">
         {/* Chrome header */}
         <div className="flex items-center justify-between pb-2 border-b border-white/10">
           <div className="flex items-center gap-1.5">
@@ -75,16 +77,16 @@ function ProjectMockup({ type }) {
   // 2. SoulfulQuartz — Ethereal Gemstone Boutique
   if (type === 'gemstone') {
     return (
-      <div className="w-full h-44 sm:h-48 bg-[#F9F8F5] rounded-t-[6px] p-4 flex flex-col justify-between border-b-2 border-[#111827] relative overflow-hidden">
+      <div className="w-full h-44 sm:h-48 bg-[#F9F8F5] dark:bg-[#0E131F] rounded-t-[6px] p-4 flex flex-col justify-between border-b-2 border-[#111827] dark:border-white/20 relative overflow-hidden">
         {/* Subtle grid background */}
         <div
-          className="absolute inset-0 bg-[radial-gradient(#111827_1px,transparent_1px)] [background-size:16px_16px] opacity-10 pointer-events-none"
+          className="absolute inset-0 bg-[radial-gradient(#111827_1px,transparent_1px)] dark:bg-[radial-gradient(white_1px,transparent_1px)] [background-size:16px_16px] opacity-10 pointer-events-none"
           aria-hidden="true"
         />
 
         {/* Chrome header */}
-        <div className="relative z-10 flex items-center justify-between pb-1.5 border-b border-[#111827]/15">
-          <span className="font-mono text-[10px] font-bold text-[#111827] flex items-center gap-1.5">
+        <div className="relative z-10 flex items-center justify-between pb-1.5 border-b border-[#111827]/15 dark:border-white/15">
+          <span className="font-mono text-[10px] font-bold text-[#111827] dark:text-white flex items-center gap-1.5">
             <Gem size={13} className="text-[#88C999]" />
             <span>Next.js 15 App Router // Boutique</span>
           </span>
@@ -96,17 +98,17 @@ function ProjectMockup({ type }) {
         {/* Central visual: Crystal Advisor Quiz preview & state */}
         <div className="relative z-10 grid grid-cols-2 gap-3 items-center py-1">
           {/* Crystal Quiz Card */}
-          <div className="bg-white rounded-[6px] border-2 border-[#111827] shadow-[3px_3px_0px_0px_#111827] p-2.5">
-            <span className="font-mono text-[9px] font-bold text-[#4B5563] uppercase">Crystal Advisor Quiz</span>
-            <p className="font-display font-extrabold text-xs text-[#111827] mt-0.5">Rose Quartz &bull; Healing</p>
+          <div className="bg-white dark:bg-[#161D2E] rounded-[6px] border-2 border-[#111827] dark:border-white/20 shadow-[3px_3px_0px_0px_#111827] dark:shadow-[3px_3px_0px_0px_#000000] p-2.5">
+            <span className="font-mono text-[9px] font-bold text-[#4B5563] dark:text-[#9CA3AF] uppercase">Crystal Advisor Quiz</span>
+            <p className="font-display font-extrabold text-xs text-[#111827] dark:text-white mt-0.5">Rose Quartz &bull; Healing</p>
             <div className="mt-1 flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-[#88C999]" />
-              <span className="font-mono text-[8px] text-[#4B5563]">Energy: Calming Resonance</span>
+              <span className="font-mono text-[8px] text-[#4B5563] dark:text-[#9CA3AF]">Energy: Calming Resonance</span>
             </div>
           </div>
 
           {/* Architecture snapshot */}
-          <div className="bg-[#111827] text-white rounded-[6px] border-2 border-[#111827] shadow-[3px_3px_0px_0px_#88C999] p-2.5 font-mono text-[9px] flex flex-col gap-1">
+          <div className="bg-[#111827] text-white rounded-[6px] border-2 border-[#111827] dark:border-white/20 shadow-[3px_3px_0px_0px_#88C999] p-2.5 font-mono text-[9px] flex flex-col gap-1">
             <span className="text-[#88C999]">// React Context State</span>
             <span className="text-white">cart.addItem(crystal)</span>
             <span className="text-[#A79CFF]">prisma.product.findMany()</span>
@@ -114,8 +116,8 @@ function ProjectMockup({ type }) {
         </div>
 
         {/* Bottom bar */}
-        <div className="relative z-10 flex items-center justify-between font-mono text-[10px] text-[#4B5563] bg-white/90 px-2.5 py-1 rounded border border-[#111827]/20">
-          <span className="font-bold text-[#111827]">TypeScript + Express API</span>
+        <div className="relative z-10 flex items-center justify-between font-mono text-[10px] text-[#4B5563] dark:text-[#9CA3AF] bg-white/90 dark:bg-[#161D2E]/90 px-2.5 py-1 rounded border border-[#111827]/20 dark:border-white/10">
+          <span className="font-bold text-[#111827] dark:text-white">TypeScript + Express API</span>
           <span className="text-[#88C999] font-bold">100% Fluid UI</span>
         </div>
       </div>
@@ -124,7 +126,7 @@ function ProjectMockup({ type }) {
 
   // 3. RecoverIQ — Razorpay Buildathon
   return (
-    <div className="w-full h-44 sm:h-48 bg-[#111827] rounded-t-[6px] p-4 flex flex-col justify-between border-b-2 border-[#111827] relative overflow-hidden text-white">
+    <div className="w-full h-44 sm:h-48 bg-[#111827] rounded-t-[6px] p-4 flex flex-col justify-between border-b-2 border-[#111827] dark:border-white/20 relative overflow-hidden text-white">
       {/* Chrome header */}
       <div className="flex items-center justify-between pb-2 border-b border-white/10">
         <div className="flex items-center gap-1.5">
@@ -177,37 +179,39 @@ function ProjectMockup({ type }) {
   )
 }
 
-export default function FeaturedProjects() {
+export default function FeaturedProjects({ onOpenCaseStudy }) {
   return (
-    <section id="work" className="bg-[#F9F8F5] py-16 sm:py-24 border-t-2 border-[#111827]">
+    <section id="work" className="bg-[#F9F8F5] dark:bg-[#0E131F] py-16 sm:py-24 border-t-2 border-[#111827] dark:border-white/10 transition-colors duration-200">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border-2 border-[#111827] shadow-[2px_2px_0px_0px_#111827] font-mono text-xs font-bold text-[#111827] mb-3">
-              <Sparkles size={14} className="text-[#111827]" />
-              <span>FLAGSHIP REPOSITORIES</span>
+        <ScrollReveal direction="up" delay={0}>
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white dark:bg-[#161D2E] border-2 border-[#111827] dark:border-white/20 shadow-[2px_2px_0px_0px_#111827] dark:shadow-[2px_2px_0px_0px_#000000] font-mono text-xs font-bold text-[#111827] dark:text-white mb-3">
+                <Sparkles size={14} className="text-[#111827] dark:text-[#A79CFF]" />
+                <span>FLAGSHIP REPOSITORIES</span>
+              </div>
+              <h2 className="font-display font-black text-3xl sm:text-5xl text-[#111827] dark:text-white tracking-tight">
+                Featured Projects
+              </h2>
+              <p className="font-mono text-xs sm:text-sm text-[#4B5563] dark:text-[#9CA3AF] mt-2 max-w-xl">
+                Flagship engineering projects spanning edge AI on Qualcomm NPUs, Next.js 15 e-commerce architecture, and FinTech recovery engines.
+              </p>
             </div>
-            <h2 className="font-display font-black text-3xl sm:text-5xl text-[#111827] tracking-tight">
-              Featured Projects
-            </h2>
-            <p className="font-mono text-xs sm:text-sm text-[#4B5563] mt-2 max-w-xl">
-              Flagship engineering projects spanning edge AI on Qualcomm NPUs, Next.js 15 e-commerce architecture, and FinTech recovery engines.
-            </p>
-          </div>
 
-          <a
-            href="https://github.com/kuntalmanii"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-[8px] font-mono text-xs font-bold text-[#111827] bg-white border-2 border-[#111827] shadow-[3px_3px_0px_0px_#111827] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#111827] transition-all self-start sm:self-end"
-          >
-            <GitFork size={15} />
-            <span>github.com/kuntalmanii</span>
-            <ArrowUpRight size={14} />
-          </a>
-        </div>
+            <a
+              href="https://github.com/kuntalmanii"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-[8px] font-mono text-xs font-bold text-[#111827] dark:text-white bg-white dark:bg-[#161D2E] border-2 border-[#111827] dark:border-white/20 shadow-[3px_3px_0px_0px_#111827] dark:shadow-[3px_3px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#111827] transition-all self-start sm:self-end"
+            >
+              <GitFork size={15} />
+              <span>github.com/kuntalmanii</span>
+              <ArrowUpRight size={14} />
+            </a>
+          </div>
+        </ScrollReveal>
 
         {/* Two-column responsive card grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -215,118 +219,134 @@ export default function FeaturedProjects() {
             const isLastOdd = idx === projectsData.length - 1 && projectsData.length % 2 !== 0
 
             return (
-              <article
+              <ScrollReveal
                 key={project.id}
-                className={`bg-white rounded-[8px] border-2 border-[#111827] shadow-[4px_4px_0px_0px_#111827] hover:shadow-[6px_6px_0px_0px_#111827] hover:-translate-x-1 hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between overflow-hidden group ${
-                  isLastOdd ? 'md:col-span-2' : ''
-                }`}
+                direction="up"
+                delay={100 * (idx + 1)}
+                className={isLastOdd ? 'md:col-span-2' : ''}
               >
-                <div>
-                  {/* Preview Mockup Container */}
-                  <ProjectMockup type={project.previewType} />
+                <article
+                  className="h-full bg-white dark:bg-[#161D2E] rounded-[8px] border-2 border-[#111827] dark:border-white/20 shadow-[4px_4px_0px_0px_#111827] dark:shadow-[4px_4px_0px_0px_#000000] hover:shadow-[6px_6px_0px_0px_#111827] dark:hover:shadow-[6px_6px_0px_0px_#A79CFF] hover:-translate-x-1 hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between overflow-hidden group"
+                >
+                  <div>
+                    {/* Preview Mockup Container */}
+                    <ProjectMockup type={project.previewType} />
 
-                  {/* Card Content */}
-                  <div className="p-6 sm:p-7">
-                    
-                    {/* Top Row: Category + Status Badge */}
-                    <div className="flex items-center justify-between gap-2 mb-3">
-                      <span className="font-mono text-xs font-bold text-[#4B5563] uppercase tracking-wider">
-                        {project.category}
-                      </span>
+                    {/* Card Content */}
+                    <div className="p-6 sm:p-7">
                       
-                      {/* Status Badge */}
-                      <span
-                        className={`font-mono text-xs font-bold px-3 py-1 rounded-full border border-[#111827] shadow-[2px_2px_0px_0px_#111827] ${
-                          project.statusVariant === 'primary'
-                            ? 'bg-[#A79CFF] text-[#111827]'
-                            : project.statusVariant === 'surface'
-                            ? 'bg-[#88C999] text-[#111827]'
-                            : 'bg-[#F4B942] text-[#111827]'
-                        }`}
-                      >
-                        {project.status}
-                      </span>
-                    </div>
+                      {/* Top Row: Category + Status Badge */}
+                      <div className="flex items-center justify-between gap-2 mb-3">
+                        <span className="font-mono text-xs font-bold text-[#4B5563] dark:text-[#9CA3AF] uppercase tracking-wider">
+                          {project.category}
+                        </span>
+                        
+                        {/* Status Badge */}
+                        <span
+                          className={`font-mono text-xs font-bold px-3 py-1 rounded-full border border-[#111827] dark:border-white/20 shadow-[2px_2px_0px_0px_#111827] dark:shadow-[2px_2px_0px_0px_#000000] ${
+                            project.statusVariant === 'primary'
+                              ? 'bg-[#A79CFF] text-[#111827]'
+                              : project.statusVariant === 'surface'
+                              ? 'bg-[#88C999] text-[#111827]'
+                              : 'bg-[#F4B942] text-[#111827]'
+                          }`}
+                        >
+                          {project.status}
+                        </span>
+                      </div>
 
-                    {/* Title */}
-                    <h3 className="font-display font-extrabold text-xl sm:text-2xl text-[#111827] leading-tight mb-2.5">
-                      {project.title}
-                    </h3>
+                      {/* Title */}
+                      <h3 className="font-display font-extrabold text-xl sm:text-2xl text-[#111827] dark:text-white leading-tight mb-2.5">
+                        {project.title}
+                      </h3>
 
-                    {/* Concise description */}
-                    <p className="font-mono text-xs sm:text-sm text-[#4B5563] leading-relaxed mb-5">
-                      {project.description}
-                    </p>
+                      {/* Concise description */}
+                      <p className="font-mono text-xs sm:text-sm text-[#4B5563] dark:text-[#9CA3AF] leading-relaxed mb-5">
+                        {project.description}
+                      </p>
 
-                    {/* Highlights bullet points if expanded card */}
-                    {isLastOdd && (
-                      <div className="grid sm:grid-cols-3 gap-3 mb-5 p-3 rounded-[6px] bg-[#F9F8F5] border border-[#E5E7EB]">
-                        {project.highlights.map((h, i) => (
-                          <div key={i} className="flex items-start gap-1.5 font-mono text-[11px] text-[#111827]">
-                            <CheckCircle2 size={13} className="text-[#88C999] mt-0.5 shrink-0" />
-                            <span>{h}</span>
-                          </div>
+                      {/* Highlights bullet points if expanded card */}
+                      {isLastOdd && (
+                        <div className="grid sm:grid-cols-3 gap-3 mb-5 p-3 rounded-[6px] bg-[#F9F8F5] dark:bg-[#0E131F] border border-[#E5E7EB] dark:border-white/10">
+                          {project.highlights.map((h, i) => (
+                            <div key={i} className="flex items-start gap-1.5 font-mono text-[11px] text-[#111827] dark:text-white">
+                              <CheckCircle2 size={13} className="text-[#88C999] mt-0.5 shrink-0" />
+                              <span>{h}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Tech stack tags */}
+                      <div className="flex flex-wrap gap-2 pt-1">
+                        {project.tech.map((techItem) => (
+                          <span
+                            key={techItem}
+                            className="font-mono text-[11px] font-bold px-2.5 py-1 rounded-full bg-[#F9F8F5] dark:bg-[#0E131F] border border-[#111827] dark:border-white/20 text-[#111827] dark:text-white shadow-[1px_1px_0px_0px_#111827] dark:shadow-[1px_1px_0px_0px_#000000]"
+                          >
+                            {techItem}
+                          </span>
                         ))}
                       </div>
-                    )}
 
-                    {/* Tech stack tags */}
-                    <div className="flex flex-wrap gap-2 pt-1">
-                      {project.tech.map((techItem) => (
-                        <span
-                          key={techItem}
-                          className="font-mono text-[11px] font-bold px-2.5 py-1 rounded-full bg-[#F9F8F5] border border-[#111827] text-[#111827] shadow-[1px_1px_0px_0px_#111827]"
-                        >
-                          {techItem}
-                        </span>
-                      ))}
                     </div>
-
-                  </div>
-                </div>
-
-                {/* Card Footer: Direct Link to repository */}
-                <div className="px-6 sm:px-7 py-4 bg-[#F9F8F5] border-t-2 border-[#111827] flex items-center justify-between gap-4">
-                  <div className="flex items-center gap-1.5 font-mono text-xs text-[#4B5563] truncate">
-                    <GitFork size={13} className="text-[#111827] shrink-0" />
-                    <span className="truncate">{project.githubUrl.replace('https://', '')}</span>
                   </div>
 
-                  <a
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`View ${project.title} on GitHub`}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-[6px] font-mono text-xs font-bold text-[#111827] bg-white border-2 border-[#111827] shadow-[2px_2px_0px_0px_#111827] hover:bg-[#F4B942] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_#111827] transition-all cursor-pointer select-none shrink-0"
-                  >
-                    <span>View Repository</span>
-                    <ArrowUpRight size={14} />
-                  </a>
-                </div>
+                  {/* Card Footer: Case Study button + Direct Link to repository */}
+                  <div className="px-6 sm:px-7 py-4 bg-[#F9F8F5] dark:bg-[#0E131F] border-t-2 border-[#111827] dark:border-white/20 flex flex-wrap items-center justify-between gap-3">
+                    
+                    {/* Interactive Case Study Trigger Button */}
+                    <button
+                      type="button"
+                      onClick={() => onOpenCaseStudy && onOpenCaseStudy(project)}
+                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-[6px] font-mono text-xs font-bold text-[#111827] dark:text-white bg-white dark:bg-[#161D2E] border-2 border-[#111827] dark:border-white/20 shadow-[2px_2px_0px_0px_#111827] dark:shadow-[2px_2px_0px_0px_#000000] hover:bg-[#A79CFF] dark:hover:bg-[#A79CFF] hover:text-[#111827] dark:hover:text-[#111827] hover:translate-x-0.5 hover:translate-y-0.5 transition-all cursor-pointer"
+                    >
+                      <FileText size={13} />
+                      <span>Case Study</span>
+                      <ArrowUpRight size={12} />
+                    </button>
 
-              </article>
+                    <div className="flex items-center gap-3">
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`View ${project.title} on GitHub`}
+                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-[6px] font-mono text-xs font-bold text-[#111827] bg-[#F4B942] border-2 border-[#111827] shadow-[2px_2px_0px_0px_#111827] dark:shadow-[2px_2px_0px_0px_#000000] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_#111827] transition-all cursor-pointer select-none"
+                      >
+                        <GitFork size={13} />
+                        <span>View Repository</span>
+                        <ArrowUpRight size={13} />
+                      </a>
+                    </div>
+                  </div>
+
+                </article>
+              </ScrollReveal>
             )
           })}
         </div>
 
         {/* Bottom CTA for full GitHub portfolio */}
-        <div className="mt-14 text-center">
-          <div className="inline-flex flex-col sm:flex-row items-center gap-4 p-4 sm:p-5 rounded-[8px] bg-white border-2 border-[#111827] shadow-[4px_4px_0px_0px_#111827]">
-            <p className="font-mono text-xs sm:text-sm font-bold text-[#111827]">
-              Interested in more open-source repositories and experiments?
-            </p>
-            <a
-              href="https://github.com/kuntalmanii"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[8px] font-display font-bold text-xs sm:text-sm text-[#111827] bg-[#F4B942] border-2 border-[#111827] shadow-[2px_2px_0px_0px_#111827] hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_0px_#111827] transition-all"
-            >
-              <GitFork size={15} />
-              <span>Explore All on GitHub</span>
-              <ArrowUpRight size={14} />
-            </a>
+        <ScrollReveal direction="up" delay={250}>
+          <div className="mt-14 text-center">
+            <div className="inline-flex flex-col sm:flex-row items-center gap-4 p-4 sm:p-5 rounded-[8px] bg-white dark:bg-[#161D2E] border-2 border-[#111827] dark:border-white/20 shadow-[4px_4px_0px_0px_#111827] dark:shadow-[4px_4px_0px_0px_#000000]">
+              <p className="font-mono text-xs sm:text-sm font-bold text-[#111827] dark:text-white">
+                Interested in more open-source repositories and experiments?
+              </p>
+              <a
+                href="https://github.com/kuntalmanii"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[8px] font-display font-bold text-xs sm:text-sm text-[#111827] bg-[#F4B942] border-2 border-[#111827] shadow-[2px_2px_0px_0px_#111827] hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_0px_#111827] transition-all"
+              >
+                <GitFork size={15} />
+                <span>Explore All on GitHub</span>
+                <ArrowUpRight size={14} />
+              </a>
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
 
       </div>
     </section>

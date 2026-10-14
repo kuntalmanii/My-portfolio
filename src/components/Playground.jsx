@@ -6,13 +6,10 @@ import {
   Play,
   Pause,
   Type,
-  Languages,
-  ArrowUpRight,
   Sparkles,
-  Terminal,
   KeyRound,
-  Sliders,
 } from 'lucide-react'
+import ScrollReveal from './ScrollReveal'
 
 export default function Playground() {
   // Micro-interaction states for experiment cards
@@ -41,7 +38,7 @@ export default function Playground() {
       badge: 'Security Prototype',
       tags: ['WebAuthn', 'Passkeys', 'FIDO2', 'Touch ID'],
       renderVisual: () => (
-        <div className="h-44 bg-[#111827] rounded-t-[6px] p-4 flex flex-col justify-between border-b-2 border-[#111827] relative overflow-hidden text-white">
+        <div className="h-44 bg-[#111827] rounded-t-[6px] p-4 flex flex-col justify-between border-b-2 border-[#111827] dark:border-white/20 relative overflow-hidden text-white">
           <div className="flex items-center justify-between">
             <span className="font-mono text-[10px] text-[#A79CFF] tracking-wider uppercase flex items-center gap-1.5">
               <KeyRound size={12} />
@@ -98,26 +95,26 @@ export default function Playground() {
       badge: 'Brand & Type System',
       tags: ['Devanagari', 'Space Grotesk', 'Typography', 'Tokens'],
       renderVisual: () => (
-        <div className="h-44 bg-[#F9F8F5] rounded-t-[6px] p-4 flex flex-col justify-between border-b-2 border-[#111827] relative overflow-hidden">
+        <div className="h-44 bg-[#F9F8F5] dark:bg-[#0E131F] rounded-t-[6px] p-4 flex flex-col justify-between border-b-2 border-[#111827] dark:border-white/20 relative overflow-hidden">
           {/* Typographic grid lines */}
           <div
-            className="absolute inset-0 bg-[linear-gradient(to_bottom,#E5E7EB_1px,transparent_1px)] [background-size:100%_16px] opacity-70 pointer-events-none"
+            className="absolute inset-0 bg-[linear-gradient(to_bottom,#E5E7EB_1px,transparent_1px)] dark:bg-[linear-gradient(to_bottom,#2E3B52_1px,transparent_1px)] [background-size:100%_16px] opacity-70 pointer-events-none"
             aria-hidden="true"
           />
 
-          <div className="relative z-10 flex items-center justify-between pb-1 border-b border-[#111827]/15">
-            <span className="font-mono text-[10px] font-bold text-[#111827] flex items-center gap-1.5">
-              <Type size={12} className="text-[#111827]" />
+          <div className="relative z-10 flex items-center justify-between pb-1 border-b border-[#111827]/15 dark:border-white/15">
+            <span className="font-mono text-[10px] font-bold text-[#111827] dark:text-white flex items-center gap-1.5">
+              <Type size={12} className="text-[#111827] dark:text-[#F4B942]" />
               <span>Devanagari &times; Grotesk</span>
             </span>
 
             {/* Language preview toggle */}
-            <div className="flex items-center p-0.5 rounded-full bg-white border border-[#111827] shadow-[1px_1px_0px_0px_#111827]">
+            <div className="flex items-center p-0.5 rounded-full bg-white dark:bg-[#161D2E] border border-[#111827] dark:border-white/20 shadow-[1px_1px_0px_0px_#111827]">
               <button
                 type="button"
                 onClick={() => setLangTab('hi')}
                 className={`font-mono text-[9px] font-bold px-2 py-0.5 rounded-full transition-all ${
-                  langTab === 'hi' ? 'bg-[#F4B942] text-[#111827]' : 'text-[#4B5563]'
+                  langTab === 'hi' ? 'bg-[#F4B942] text-[#111827]' : 'text-[#4B5563] dark:text-[#9CA3AF]'
                 }`}
               >
                 हिन्दी
@@ -126,7 +123,7 @@ export default function Playground() {
                 type="button"
                 onClick={() => setLangTab('en')}
                 className={`font-mono text-[9px] font-bold px-2 py-0.5 rounded-full transition-all ${
-                  langTab === 'en' ? 'bg-[#F4B942] text-[#111827]' : 'text-[#4B5563]'
+                  langTab === 'en' ? 'bg-[#F4B942] text-[#111827]' : 'text-[#4B5563] dark:text-[#9CA3AF]'
                 }`}
               >
                 EN
@@ -138,28 +135,28 @@ export default function Playground() {
           <div className="relative z-10 my-auto text-center">
             {langTab === 'hi' ? (
               <div className="animate-fade-in">
-                <span className="block font-black text-2xl text-[#111827] tracking-tight">
+                <span className="block font-black text-2xl text-[#111827] dark:text-white tracking-tight">
                   उद्यम साथी
                 </span>
-                <span className="block font-mono text-[10px] text-[#4B5563] mt-0.5">
+                <span className="block font-mono text-[10px] text-[#4B5563] dark:text-[#9CA3AF] mt-0.5">
                   वित्तीय सशक्तिकरण मंच &bull; 48px Display
                 </span>
               </div>
             ) : (
               <div className="animate-fade-in">
-                <span className="block font-display font-black text-2xl text-[#111827] tracking-tight">
+                <span className="block font-display font-black text-2xl text-[#111827] dark:text-white tracking-tight">
                   VENTURE SAATHI
                 </span>
-                <span className="block font-mono text-[10px] text-[#4B5563] mt-0.5">
+                <span className="block font-mono text-[10px] text-[#4B5563] dark:text-[#9CA3AF] mt-0.5">
                   Financial Empowerment &bull; 48px Display
                 </span>
               </div>
             )}
           </div>
 
-          <div className="relative z-10 flex items-center justify-between font-mono text-[9px] text-[#111827] bg-white/90 px-2 py-1 rounded border border-[#111827]/20">
+          <div className="relative z-10 flex items-center justify-between font-mono text-[9px] text-[#111827] dark:text-white bg-white/90 dark:bg-[#161D2E]/90 px-2 py-1 rounded border border-[#111827]/20 dark:border-white/10">
             <span>Optical Margin Alignment</span>
-            <span className="font-bold text-[#F4B942] bg-[#111827] px-1 rounded">1.25 Modular</span>
+            <span className="font-bold text-[#F4B942] bg-[#111827] dark:bg-black px-1 rounded">1.25 Modular</span>
           </div>
         </div>
       ),
@@ -176,7 +173,7 @@ export default function Playground() {
       renderVisual: () => {
         const bars = [25, 45, 60, 80, 40, 95, 70, 85, 50, 65, 90, 75, 40, 80, 60, 45, 30, 70, 85, 40]
         return (
-          <div className="h-44 bg-[#111827] rounded-t-[6px] p-4 flex flex-col justify-between border-b-2 border-[#111827] relative overflow-hidden text-white">
+          <div className="h-44 bg-[#111827] rounded-t-[6px] p-4 flex flex-col justify-between border-b-2 border-[#111827] dark:border-white/20 relative overflow-hidden text-white">
             <div className="flex items-center justify-between">
               <span className="font-mono text-[10px] text-[#88C999] tracking-wider uppercase flex items-center gap-1.5">
                 <Volume2 size={12} />
@@ -235,88 +232,91 @@ export default function Playground() {
   ]
 
   return (
-    <section id="playground" className="bg-white py-16 sm:py-24 border-t-2 border-[#111827]">
+    <section id="playground" className="bg-white dark:bg-[#0E131F] py-16 sm:py-24 border-t-2 border-[#111827] dark:border-white/10 transition-colors duration-200">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F9F8F5] border-2 border-[#111827] shadow-[2px_2px_0px_0px_#111827] font-mono text-xs font-bold text-[#111827] mb-3">
-              <Sparkles size={14} className="text-[#111827]" />
-              <span>LABS &amp; EXPERIMENTS</span>
+        <ScrollReveal direction="up" delay={0}>
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F9F8F5] dark:bg-[#161D2E] border-2 border-[#111827] dark:border-white/20 shadow-[2px_2px_0px_0px_#111827] dark:shadow-[2px_2px_0px_0px_#000000] font-mono text-xs font-bold text-[#111827] dark:text-white mb-3">
+                <Sparkles size={14} className="text-[#111827] dark:text-[#A79CFF]" />
+                <span>LABS &amp; EXPERIMENTS</span>
+              </div>
+              <h2 className="font-display font-black text-3xl sm:text-5xl text-[#111827] dark:text-white tracking-tight">
+                Technical Playground
+              </h2>
+              <p className="font-mono text-xs sm:text-sm text-[#4B5563] dark:text-[#9CA3AF] mt-2 max-w-xl">
+                Explorations in browser APIs, multilingual typography systems, and high-fidelity interaction components.
+              </p>
             </div>
-            <h2 className="font-display font-black text-3xl sm:text-5xl text-[#111827] tracking-tight">
-              Technical Playground
-            </h2>
-            <p className="font-mono text-xs sm:text-sm text-[#4B5563] mt-2 max-w-xl">
-              Explorations in browser APIs, multilingual typography systems, and high-fidelity interaction components.
-            </p>
-          </div>
 
-          <div className="inline-flex items-center gap-2 font-mono text-xs font-bold text-[#111827] bg-[#F9F8F5] px-3.5 py-2 rounded-[8px] border-2 border-[#111827] shadow-[2px_2px_0px_0px_#111827] self-start sm:self-end">
-            <span className="w-2 h-2 rounded-full bg-[#88C999] animate-pulse" />
-            <span>Interactive Micro-Apps</span>
+            <div className="inline-flex items-center gap-2 font-mono text-xs font-bold text-[#111827] dark:text-white bg-[#F9F8F5] dark:bg-[#161D2E] px-3.5 py-2 rounded-[8px] border-2 border-[#111827] dark:border-white/20 shadow-[2px_2px_0px_0px_#111827] dark:shadow-[2px_2px_0px_0px_#000000] self-start sm:self-end">
+              <span className="w-2 h-2 rounded-full bg-[#88C999] animate-pulse" />
+              <span>Interactive Micro-Apps</span>
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* 3-Column Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {experiments.map((exp) => (
-            <article
-              key={exp.id}
-              className="bg-white rounded-[8px] border-2 border-[#111827] shadow-[4px_4px_0px_0px_#111827] hover:shadow-[6px_6px_0px_0px_#111827] hover:-translate-x-1 hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between overflow-hidden group"
-            >
-              <div>
-                {/* Visual Preview / Experiment Container */}
-                {exp.renderVisual()}
+          {experiments.map((exp, idx) => (
+            <ScrollReveal key={exp.id} direction="up" delay={100 * (idx + 1)}>
+              <article
+                className="h-full bg-white dark:bg-[#161D2E] rounded-[8px] border-2 border-[#111827] dark:border-white/20 shadow-[4px_4px_0px_0px_#111827] dark:shadow-[4px_4px_0px_0px_#000000] hover:shadow-[6px_6px_0px_0px_#111827] dark:hover:shadow-[6px_6px_0px_0px_#A79CFF] hover:-translate-x-1 hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between overflow-hidden group"
+              >
+                <div>
+                  {/* Visual Preview / Experiment Container */}
+                  {exp.renderVisual()}
 
-                {/* Card Body */}
-                <div className="p-6">
-                  
-                  {/* Status / Category Badge */}
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="font-mono text-[11px] font-bold text-[#4B5563] uppercase tracking-wider">
-                      {exp.subtitle}
-                    </span>
-                    <span
-                      className="font-mono text-[11px] font-bold px-2.5 py-0.5 rounded-full border border-[#111827] shadow-[1px_1px_0px_0px_#111827] text-[#111827]"
-                      style={{ backgroundColor: exp.accentColor }}
-                    >
-                      {exp.badge}
-                    </span>
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="font-display font-extrabold text-xl text-[#111827] leading-tight mb-2.5">
-                    {exp.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="font-mono text-xs text-[#4B5563] leading-relaxed mb-5">
-                    {exp.description}
-                  </p>
-
-                  {/* Tech Tags */}
-                  <div className="flex flex-wrap gap-1.5 pt-1">
-                    {exp.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="font-mono text-[10px] font-bold px-2 py-0.5 rounded-[4px] bg-[#F9F8F5] border border-[#111827] text-[#111827]"
-                      >
-                        {tag}
+                  {/* Card Body */}
+                  <div className="p-6">
+                    
+                    {/* Status / Category Badge */}
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="font-mono text-[11px] font-bold text-[#4B5563] dark:text-[#9CA3AF] uppercase tracking-wider">
+                        {exp.subtitle}
                       </span>
-                    ))}
+                      <span
+                        className="font-mono text-[11px] font-bold px-2.5 py-0.5 rounded-full border border-[#111827] shadow-[1px_1px_0px_0px_#111827] text-[#111827]"
+                        style={{ backgroundColor: exp.accentColor }}
+                      >
+                        {exp.badge}
+                      </span>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="font-display font-extrabold text-xl text-[#111827] dark:text-white leading-tight mb-2.5">
+                      {exp.title}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="font-mono text-xs text-[#4B5563] dark:text-[#9CA3AF] leading-relaxed mb-5">
+                      {exp.description}
+                    </p>
+
+                    {/* Tech Tags */}
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                      {exp.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="font-mono text-[10px] font-bold px-2 py-0.5 rounded-[4px] bg-[#F9F8F5] dark:bg-[#0E131F] border border-[#111827] dark:border-white/20 text-[#111827] dark:text-white"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
                   </div>
-
                 </div>
-              </div>
 
-              {/* Card Footer Accent Stripe */}
-              <div
-                className="h-2 w-full border-t-2 border-[#111827]"
-                style={{ backgroundColor: exp.accentColor }}
-              />
-            </article>
+                {/* Card Footer Accent Stripe */}
+                <div
+                  className="h-2 w-full border-t-2 border-[#111827] dark:border-white/20"
+                  style={{ backgroundColor: exp.accentColor }}
+                />
+              </article>
+            </ScrollReveal>
           ))}
         </div>
 
