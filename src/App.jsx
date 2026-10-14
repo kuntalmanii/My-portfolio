@@ -9,7 +9,7 @@ import {
   Layers,
   Cpu,
 } from 'lucide-react'
-import { Navbar, Hero } from './components'
+import { Navbar, Hero, Capabilities, FeaturedProjects } from './components'
 import './index.css'
 
 // Alias brand icons to available Lucide alternatives
@@ -17,33 +17,9 @@ const Github = GitFork
 const Linkedin = Link2
 
 const SKILLS = [
-  { icon: Code2, label: 'Frontend', tags: ['React', 'TypeScript', 'Tailwind CSS', 'Vite'] },
-  { icon: Layers, label: 'Architecture', tags: ['REST', 'State Machines', 'Design Systems'] },
-  { icon: Cpu, label: 'Performance', tags: ['Core Web Vitals', 'Testing', 'CI/CD'] },
-]
-
-const PROJECTS = [
-  {
-    title: 'Project Alpha',
-    description: 'A full-stack SaaS platform with real-time collaboration and AI-assisted workflows.',
-    tags: ['React', 'Node.js', 'WebSockets'],
-    href: '#',
-    color: 'bg-primary',
-  },
-  {
-    title: 'Project Beta',
-    description: 'Open-source component library with a retro-modern design system and full a11y support.',
-    tags: ['TypeScript', 'Storybook', 'Radix UI'],
-    href: '#',
-    color: 'bg-secondary',
-  },
-  {
-    title: 'Project Gamma',
-    description: 'CLI tool that scaffolds opinionated project structures with one command.',
-    tags: ['Node.js', 'Commander.js', 'Inquirer'],
-    href: '#',
-    color: 'bg-surface',
-  },
+  { icon: Code2, label: 'Frontend Engine', tags: ['React', 'TypeScript', 'Tailwind CSS', 'Vite', 'Next.js'] },
+  { icon: Layers, label: 'Architecture & UI', tags: ['Design Tokens', 'Leaflet API', 'Radix UI', 'GSAP'] },
+  { icon: Cpu, label: 'AI & Performance', tags: ['Google Gemini API', 'Core Web Vitals', 'Node.js', 'REST API'] },
 ]
 
 function SkillsSection() {
@@ -57,6 +33,9 @@ function SkillsSection() {
           <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-[#111827] mt-3">
             What I bring to the table
           </h2>
+          <p className="font-mono text-xs sm:text-sm text-[#4B5563] mt-2">
+            Modern tools and patterns honed across production apps and open-source code.
+          </p>
         </div>
 
         <div className="grid sm:grid-cols-3 gap-6">
@@ -85,71 +64,6 @@ function SkillsSection() {
   )
 }
 
-function ProjectsSection() {
-  return (
-    <section id="work" className="bg-[#F9F8F5]">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
-          <div>
-            <span className="font-mono text-xs uppercase tracking-widest text-[#4B5563]">
-              Selected Work
-            </span>
-            <h2 className="font-display font-black text-3xl sm:text-5xl text-[#111827] tracking-tight mt-1">
-              Featured Projects
-            </h2>
-          </div>
-          <a
-            href="https://github.com/kuntalmanii"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 font-mono text-xs font-bold text-[#111827] hover:underline underline-offset-4"
-          >
-            <Github size={14} /> View GitHub Profile <ArrowUpRight size={14} />
-          </a>
-        </div>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {PROJECTS.map(({ title, description, tags, href, color }, i) => (
-            <article
-              key={title}
-              className="card shadow-hard-interactive group animate-fade-up bg-white border-2 border-[#111827]"
-              style={{ animationDelay: `${i * 120}ms` }}
-            >
-              {/* Color accent bar */}
-              <div className={`${color} -mx-6 -mt-6 mb-5 h-2.5 rounded-t-[6px] border-b-2 border-[#111827]`} />
-
-              <div className="flex items-start justify-between gap-2 mb-3">
-                <h3 className="font-display font-bold text-xl text-[#111827]">{title}</h3>
-                <a
-                  href={href}
-                  aria-label={`Open ${title}`}
-                  className="p-1.5 border-2 border-[#111827] rounded-[8px] shadow-[2px_2px_0px_0px_#111827] group-hover:bg-[#A79CFF] group-hover:-translate-y-0.5 transition-all"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <ExternalLink size={14} />
-                </a>
-              </div>
-
-              <p className="font-mono text-xs text-[#4B5563] mb-5 leading-relaxed">
-                {description}
-              </p>
-
-              <div className="flex flex-wrap gap-2">
-                {tags.map((tag) => (
-                  <span key={tag} className="badge bg-[#F9F8F5] border border-[#111827] text-[#111827]">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
 function ContactSection() {
   const [form, setForm] = useState({ name: '', email: '', message: '' })
   const [sent, setSent] = useState(false)
@@ -165,7 +79,7 @@ function ContactSection() {
   }
 
   return (
-    <section id="contact" className="bg-white border-t-2 border-[#111827]">
+    <section id="contact" className="bg-[#F9F8F5]">
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
         <div className="text-center mb-8">
           <span className="font-mono text-xs uppercase tracking-widest text-[#4B5563]">
@@ -189,7 +103,7 @@ function ContactSection() {
         ) : (
           <form
             onSubmit={handleSubmit}
-            className="card shadow-[4px_4px_0px_0px_#111827] border-2 border-[#111827] bg-[#F9F8F5] flex flex-col gap-5 p-6 sm:p-8"
+            className="card shadow-[4px_4px_0px_0px_#111827] border-2 border-[#111827] bg-white flex flex-col gap-5 p-6 sm:p-8"
             noValidate
           >
             <div className="grid sm:grid-cols-2 gap-5">
@@ -232,7 +146,7 @@ function ContactSection() {
                 id="message"
                 name="message"
                 required
-                placeholder="Tell me about your project or role..."
+                placeholder="Tell me about your project, contract, or full-time opportunity..."
                 className="textarea border-2 border-[#111827]"
                 value={form.message}
                 onChange={handleChange}
@@ -260,7 +174,7 @@ function Footer() {
             MK
           </span>
           <p className="font-mono text-xs text-[#E5E7EB]">
-            © {new Date().getFullYear()} Manish Kuntal. Built with React + Tailwind.
+            © {new Date().getFullYear()} Manish Kuntal &bull; Built with React + Vite + Tailwind.
           </p>
         </div>
         <div className="flex items-center gap-6">
@@ -298,8 +212,9 @@ export default function App() {
       <Navbar />
       <main className="flex-1">
         <Hero />
+        <Capabilities />
+        <FeaturedProjects />
         <SkillsSection />
-        <ProjectsSection />
         <ContactSection />
       </main>
       <Footer />
