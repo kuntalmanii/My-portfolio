@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import {
   GitFork,
   Link2,
@@ -8,27 +8,18 @@ import {
   Code2,
   Layers,
   Cpu,
-  Menu,
-  X,
 } from 'lucide-react'
-
-// Alias brand icons to available Lucide alternatives
-const Github   = GitFork
-const Linkedin = Link2
+import { Navbar, Hero } from './components'
 import './index.css'
 
-// ─── Placeholder data (move to src/data/ as you scale) ──────────────────────
-const NAV_LINKS = [
-  { label: 'About',    href: '#about'    },
-  { label: 'Work',     href: '#work'     },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Contact',  href: '#contact'  },
-]
+// Alias brand icons to available Lucide alternatives
+const Github = GitFork
+const Linkedin = Link2
 
 const SKILLS = [
-  { icon: Code2,  label: 'Frontend',     tags: ['React', 'TypeScript', 'Tailwind'] },
-  { icon: Layers, label: 'Architecture', tags: ['REST', 'GraphQL', 'Design Systems'] },
-  { icon: Cpu,    label: 'Tooling',      tags: ['Vite', 'Jest', 'CI/CD'] },
+  { icon: Code2, label: 'Frontend', tags: ['React', 'TypeScript', 'Tailwind CSS', 'Vite'] },
+  { icon: Layers, label: 'Architecture', tags: ['REST', 'State Machines', 'Design Systems'] },
+  { icon: Cpu, label: 'Performance', tags: ['Core Web Vitals', 'Testing', 'CI/CD'] },
 ]
 
 const PROJECTS = [
@@ -55,183 +46,35 @@ const PROJECTS = [
   },
 ]
 
-// ─── Sub-components ──────────────────────────────────────────────────────────
-
-function Navbar({ menuOpen, setMenuOpen }) {
-  const [scrolled, setScrolled] = useState(false)
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', onScroll)
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300
-        ${scrolled ? 'bg-background/90 backdrop-blur-sm border-b border-border shadow-hard-sm' : 'bg-transparent'}`}
-    >
-      <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-        {/* Logo */}
-        <a href="#" className="font-display font-bold text-xl text-text-primary">
-          dev<span className="text-primary">.</span>folio
-        </a>
-
-        {/* Desktop links */}
-        <ul className="hidden md:flex items-center gap-8">
-          {NAV_LINKS.map(({ label, href }) => (
-            <li key={label}>
-              <a href={href} className="nav-link hover:text-primary">{label}</a>
-            </li>
-          ))}
-        </ul>
-
-        {/* CTA */}
-        <div className="hidden md:flex items-center gap-3">
-          <a
-            href="mailto:hello@portfolio.dev"
-            className="btn-primary text-sm py-2 px-4"
-          >
-            Hire Me <ArrowUpRight size={14} />
-          </a>
-        </div>
-
-        {/* Mobile burger */}
-        <button
-          id="mobile-menu-btn"
-          className="md:hidden p-2 rounded-control border border-border shadow-hard-sm bg-white"
-          onClick={() => setMenuOpen(o => !o)}
-          aria-label="Toggle menu"
-        >
-          {menuOpen ? <X size={18} /> : <Menu size={18} />}
-        </button>
-      </nav>
-
-      {/* Mobile drawer */}
-      {menuOpen && (
-        <div className="md:hidden bg-background border-b border-border shadow-hard px-6 py-4 flex flex-col gap-4">
-          {NAV_LINKS.map(({ label, href }) => (
-            <a
-              key={label}
-              href={href}
-              className="nav-link text-base py-1"
-              onClick={() => setMenuOpen(false)}
-            >
-              {label}
-            </a>
-          ))}
-          <a href="mailto:hello@portfolio.dev" className="btn-primary self-start">
-            Hire Me <ArrowUpRight size={14} />
-          </a>
-        </div>
-      )}
-    </header>
-  )
-}
-
-function HeroSection() {
-  return (
-    <section
-      id="about"
-      className="min-h-screen flex items-center bg-background pt-16"
-    >
-      <div className="section">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Copy */}
-          <div className="animate-fade-up">
-            <span className="badge-primary mb-6">
-              Available for work ✦
-            </span>
-            <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mt-4 mb-6">
-              Building things{' '}
-              <span className="text-gradient">people love</span>{' '}
-              to use.
-            </h1>
-            <p className="font-body text-text-secondary text-base sm:text-lg max-w-lg mb-10 leading-relaxed">
-              I'm a full-stack developer who cares deeply about craft — clean APIs,
-              accessible UIs, and systems that scale without drama.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <a href="#projects" className="btn-primary">
-                View Projects <ArrowUpRight size={16} />
-              </a>
-              <a href="#contact" className="btn-outline">
-                Get In Touch <Mail size={16} />
-              </a>
-            </div>
-
-            {/* Social row */}
-            <div className="flex items-center gap-4 mt-10">
-              {[
-                { icon: Github,   href: 'https://github.com',   label: 'GitHub'   },
-                { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
-                { icon: Mail,     href: 'mailto:hello@portfolio.dev', label: 'Email' },
-              ].map(({ icon: Icon, href, label }) => (
-                <a
-                  key={label}
-                  href={href}
-                  aria-label={label}
-                  className="p-2.5 border-2 border-border rounded-control bg-white
-                             shadow-hard-interactive hover:border-text-primary"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Icon size={18} />
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* Decorative card stack */}
-          <div className="hidden lg:flex justify-center animate-fade-in animation-delay-300">
-            <div className="relative w-72 h-80">
-              {/* Back card */}
-              <div className="absolute inset-0 bg-secondary border-2 border-text-primary rounded-card shadow-hard rotate-6" />
-              {/* Middle card */}
-              <div className="absolute inset-0 bg-primary border-2 border-text-primary rounded-card shadow-hard rotate-2" />
-              {/* Front card */}
-              <div className="absolute inset-0 bg-surface border-2 border-text-primary rounded-card shadow-hard flex flex-col justify-between p-6">
-                <div className="font-display text-xl font-bold text-text-primary">
-                  Hello, world! 👋
-                </div>
-                <div>
-                  <p className="font-body text-xs text-text-secondary mb-3">Currently building</p>
-                  <div className="flex flex-wrap gap-2">
-                    {['React', 'TypeScript', 'Vite'].map(tag => (
-                      <span key={tag} className="badge">{tag}</span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
 function SkillsSection() {
   return (
-    <section className="bg-white border-y border-border">
-      <div className="section py-16">
-        <p className="section-subtitle text-center uppercase tracking-widest text-xs mb-8">
-          What I bring to the table
-        </p>
+    <section id="playground" className="bg-white border-y-2 border-[#111827]">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+        <div className="text-center max-w-xl mx-auto mb-12">
+          <span className="font-mono text-xs uppercase tracking-widest text-[#4B5563] bg-[#F9F8F5] px-3 py-1 rounded-full border border-[#E5E7EB] shadow-[1px_1px_0px_0px_#111827]">
+            Playground &amp; Toolkit
+          </span>
+          <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-[#111827] mt-3">
+            What I bring to the table
+          </h2>
+        </div>
+
         <div className="grid sm:grid-cols-3 gap-6">
           {SKILLS.map(({ icon: Icon, label, tags }, i) => (
             <div
               key={label}
-              className={`card shadow-hard-interactive animate-fade-up`}
+              className="card shadow-hard-interactive animate-fade-up bg-[#F9F8F5] border-2 border-[#111827]"
               style={{ animationDelay: `${i * 100}ms` }}
             >
-              <div className="mb-4 p-3 inline-flex bg-primary/20 rounded-control">
-                <Icon size={22} className="text-text-primary" />
+              <div className="mb-4 p-3 inline-flex bg-[#A79CFF] rounded-[8px] border-2 border-[#111827] shadow-[2px_2px_0px_0px_#111827]">
+                <Icon size={22} className="text-[#111827]" />
               </div>
-              <h3 className="font-display font-bold text-lg text-text-primary mb-3">{label}</h3>
+              <h3 className="font-display font-bold text-lg text-[#111827] mb-3">{label}</h3>
               <div className="flex flex-wrap gap-2">
-                {tags.map(tag => (
-                  <span key={tag} className="badge">{tag}</span>
+                {tags.map((tag) => (
+                  <span key={tag} className="badge bg-white border border-[#111827] text-[#111827]">
+                    {tag}
+                  </span>
                 ))}
               </div>
             </div>
@@ -244,30 +87,43 @@ function SkillsSection() {
 
 function ProjectsSection() {
   return (
-    <section id="projects" className="bg-background">
-      <div className="section">
-        <p className="font-body text-xs uppercase tracking-widest text-text-secondary mb-2">
-          Selected Work
-        </p>
-        <h2 className="section-title mb-10">Projects</h2>
+    <section id="work" className="bg-[#F9F8F5]">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+          <div>
+            <span className="font-mono text-xs uppercase tracking-widest text-[#4B5563]">
+              Selected Work
+            </span>
+            <h2 className="font-display font-black text-3xl sm:text-5xl text-[#111827] tracking-tight mt-1">
+              Featured Projects
+            </h2>
+          </div>
+          <a
+            href="https://github.com/kuntalmanii"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 font-mono text-xs font-bold text-[#111827] hover:underline underline-offset-4"
+          >
+            <Github size={14} /> View GitHub Profile <ArrowUpRight size={14} />
+          </a>
+        </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {PROJECTS.map(({ title, description, tags, href, color }, i) => (
             <article
               key={title}
-              className={`card shadow-hard-interactive group animate-fade-up`}
+              className="card shadow-hard-interactive group animate-fade-up bg-white border-2 border-[#111827]"
               style={{ animationDelay: `${i * 120}ms` }}
             >
-              {/* Color bar */}
-              <div className={`${color} -mx-6 -mt-6 mb-5 h-2 rounded-t-card border-b border-border`} />
+              {/* Color accent bar */}
+              <div className={`${color} -mx-6 -mt-6 mb-5 h-2.5 rounded-t-[6px] border-b-2 border-[#111827]`} />
 
               <div className="flex items-start justify-between gap-2 mb-3">
-                <h3 className="font-display font-bold text-lg text-text-primary">{title}</h3>
+                <h3 className="font-display font-bold text-xl text-[#111827]">{title}</h3>
                 <a
                   href={href}
                   aria-label={`Open ${title}`}
-                  className="p-1.5 border border-border rounded-control shadow-hard-sm
-                             group-hover:bg-primary group-hover:border-text-primary transition-all"
+                  className="p-1.5 border-2 border-[#111827] rounded-[8px] shadow-[2px_2px_0px_0px_#111827] group-hover:bg-[#A79CFF] group-hover:-translate-y-0.5 transition-all"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -275,28 +131,19 @@ function ProjectsSection() {
                 </a>
               </div>
 
-              <p className="font-body text-sm text-text-secondary mb-5 leading-relaxed">
+              <p className="font-mono text-xs text-[#4B5563] mb-5 leading-relaxed">
                 {description}
               </p>
 
               <div className="flex flex-wrap gap-2">
-                {tags.map(tag => (
-                  <span key={tag} className="badge">{tag}</span>
+                {tags.map((tag) => (
+                  <span key={tag} className="badge bg-[#F9F8F5] border border-[#111827] text-[#111827]">
+                    {tag}
+                  </span>
                 ))}
               </div>
             </article>
           ))}
-        </div>
-
-        <div className="mt-10 text-center">
-          <a
-            href="https://github.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-outline inline-flex"
-          >
-            <Github size={16} /> View all on GitHub <ArrowUpRight size={14} />
-          </a>
         </div>
       </div>
     </section>
@@ -307,45 +154,47 @@ function ContactSection() {
   const [form, setForm] = useState({ name: '', email: '', message: '' })
   const [sent, setSent] = useState(false)
 
-  const handleChange = e =>
-    setForm(f => ({ ...f, [e.target.name]: e.target.value }))
+  const handleChange = (e) =>
+    setForm((f) => ({ ...f, [e.target.name]: e.target.value }))
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault()
-    // TODO: wire up EmailJS using VITE_EMAILJS_* env vars
-    console.log('Form submitted:', form)
     setSent(true)
     setTimeout(() => setSent(false), 4000)
     setForm({ name: '', email: '', message: '' })
   }
 
   return (
-    <section id="contact" className="bg-white border-t border-border">
-      <div className="section max-w-2xl">
-        <p className="font-body text-xs uppercase tracking-widest text-text-secondary mb-2">
-          Let's Connect
-        </p>
-        <h2 className="section-title mb-2">Get In Touch</h2>
-        <p className="section-subtitle">
-          Open to full-time roles, freelance projects, and interesting collabs.
-        </p>
+    <section id="contact" className="bg-white border-t-2 border-[#111827]">
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+        <div className="text-center mb-8">
+          <span className="font-mono text-xs uppercase tracking-widest text-[#4B5563]">
+            Let's Connect
+          </span>
+          <h2 className="font-display font-black text-3xl sm:text-4xl text-[#111827] mt-1">
+            Get In Touch
+          </h2>
+          <p className="font-mono text-xs sm:text-sm text-[#4B5563] mt-2">
+            Open for product development, design systems, and frontend engineering roles.
+          </p>
+        </div>
 
         {sent ? (
-          <div className="card shadow-hard text-center py-10 animate-fade-up">
+          <div className="card shadow-[4px_4px_0px_0px_#111827] border-2 border-[#111827] bg-[#88C999] text-center py-10 animate-fade-up">
             <span className="text-3xl mb-3 block">🎉</span>
-            <p className="font-display font-bold text-lg text-text-primary">
-              Message sent — I'll get back to you soon!
+            <p className="font-display font-bold text-lg text-[#111827]">
+              Message sent — Manish will get back to you soon!
             </p>
           </div>
         ) : (
           <form
             onSubmit={handleSubmit}
-            className="card shadow-hard flex flex-col gap-5"
+            className="card shadow-[4px_4px_0px_0px_#111827] border-2 border-[#111827] bg-[#F9F8F5] flex flex-col gap-5 p-6 sm:p-8"
             noValidate
           >
             <div className="grid sm:grid-cols-2 gap-5">
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="name" className="font-body text-xs font-bold text-text-secondary uppercase tracking-wider">
+                <label htmlFor="name" className="font-mono text-xs font-bold text-[#4B5563] uppercase tracking-wider">
                   Name
                 </label>
                 <input
@@ -354,13 +203,13 @@ function ContactSection() {
                   type="text"
                   required
                   placeholder="Your name"
-                  className="input"
+                  className="input border-2 border-[#111827]"
                   value={form.name}
                   onChange={handleChange}
                 />
               </div>
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="email" className="font-body text-xs font-bold text-text-secondary uppercase tracking-wider">
+                <label htmlFor="email" className="font-mono text-xs font-bold text-[#4B5563] uppercase tracking-wider">
                   Email
                 </label>
                 <input
@@ -369,27 +218,30 @@ function ContactSection() {
                   type="email"
                   required
                   placeholder="you@example.com"
-                  className="input"
+                  className="input border-2 border-[#111827]"
                   value={form.email}
                   onChange={handleChange}
                 />
               </div>
             </div>
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="message" className="font-body text-xs font-bold text-text-secondary uppercase tracking-wider">
+              <label htmlFor="message" className="font-mono text-xs font-bold text-[#4B5563] uppercase tracking-wider">
                 Message
               </label>
               <textarea
                 id="message"
                 name="message"
                 required
-                placeholder="What's on your mind?"
-                className="textarea"
+                placeholder="Tell me about your project or role..."
+                className="textarea border-2 border-[#111827]"
                 value={form.message}
                 onChange={handleChange}
               />
             </div>
-            <button type="submit" className="btn-primary self-start">
+            <button
+              type="submit"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-[8px] font-display font-bold text-sm text-[#111827] bg-[#A79CFF] border-2 border-[#111827] shadow-[3px_3px_0px_0px_#111827] hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#111827] active:translate-y-0.5 active:shadow-none transition-all self-start cursor-pointer"
+            >
               Send Message <ArrowUpRight size={16} />
             </button>
           </form>
@@ -401,36 +253,51 @@ function ContactSection() {
 
 function Footer() {
   return (
-    <footer className="bg-background border-t border-border">
-      <div className="section py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p className="font-body text-xs text-text-secondary">
-          © {new Date().getFullYear()} dev.folio — Built with React + Vite + Tailwind
-        </p>
+    <footer className="bg-[#111827] text-white border-t-2 border-[#111827]">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="flex items-center gap-2">
+          <span className="w-8 h-8 rounded-[6px] bg-[#A79CFF] text-[#111827] font-display font-black text-sm flex items-center justify-center border border-white">
+            MK
+          </span>
+          <p className="font-mono text-xs text-[#E5E7EB]">
+            © {new Date().getFullYear()} Manish Kuntal. Built with React + Tailwind.
+          </p>
+        </div>
         <div className="flex items-center gap-6">
-          {[
-            { label: 'GitHub',   href: 'https://github.com'   },
-            { label: 'LinkedIn', href: 'https://linkedin.com' },
-            { label: 'Email',    href: 'mailto:hello@portfolio.dev' },
-          ].map(({ label, href }) => (
-            <a key={label} href={href} className="nav-link text-xs hover:text-primary">
-              {label}
-            </a>
-          ))}
+          <a
+            href="https://github.com/kuntalmanii"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-mono text-xs text-[#E5E7EB] hover:text-[#F4B942] transition-colors"
+          >
+            GitHub
+          </a>
+          <a
+            href="https://linkedin.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-mono text-xs text-[#E5E7EB] hover:text-[#F4B942] transition-colors"
+          >
+            LinkedIn
+          </a>
+          <a
+            href="mailto:kuntalmani12@gmail.com"
+            className="font-mono text-xs text-[#E5E7EB] hover:text-[#F4B942] transition-colors"
+          >
+            Email
+          </a>
         </div>
       </div>
     </footer>
   )
 }
 
-// ─── Root App ─────────────────────────────────────────────────────────────────
 export default function App() {
-  const [menuOpen, setMenuOpen] = useState(false)
-
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+    <div className="min-h-screen flex flex-col bg-[#F9F8F5]">
+      <Navbar />
       <main className="flex-1">
-        <HeroSection />
+        <Hero />
         <SkillsSection />
         <ProjectsSection />
         <ContactSection />
