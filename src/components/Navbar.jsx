@@ -13,7 +13,6 @@ import { useTheme } from '../context/ThemeContext'
 
 export default function Navbar({ onOpenCommandPalette, onOpenTerminal }) {
   const [activeTab, setActiveTab] = useState('Home')
-  const [lang, setLang] = useState('EN')
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const { theme, toggleTheme } = useTheme()
 
@@ -134,37 +133,6 @@ export default function Navbar({ onOpenCommandPalette, onOpenTerminal }) {
             {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
           </button>
 
-          {/* Language Pill Switch (EN / PH) */}
-          <div 
-            role="group" 
-            aria-label="Language selection"
-            className="flex items-center p-1 rounded-full border-2 border-[#111827] dark:border-white/20 bg-white dark:bg-[#161D2E] shadow-[2px_2px_0px_0px_#111827] dark:shadow-[2px_2px_0px_0px_#000000]"
-          >
-            <button
-              type="button"
-              onClick={() => setLang('EN')}
-              className={`font-mono text-xs font-bold px-2.5 py-0.5 rounded-full transition-all duration-150 cursor-pointer ${
-                lang === 'EN'
-                  ? 'bg-[#A79CFF] text-[#111827] shadow-[1px_1px_0px_0px_#111827]'
-                  : 'text-[#4B5563] dark:text-[#9CA3AF] hover:text-[#111827] dark:hover:text-white'
-              }`}
-              aria-pressed={lang === 'EN'}
-            >
-              EN
-            </button>
-            <button
-              type="button"
-              onClick={() => setLang('PH')}
-              className={`font-mono text-xs font-bold px-2.5 py-0.5 rounded-full transition-all duration-150 cursor-pointer ${
-                lang === 'PH'
-                  ? 'bg-[#A79CFF] text-[#111827] shadow-[1px_1px_0px_0px_#111827]'
-                  : 'text-[#4B5563] dark:text-[#9CA3AF] hover:text-[#111827] dark:hover:text-white'
-              }`}
-              aria-pressed={lang === 'PH'}
-            >
-              PH
-            </button>
-          </div>
 
           {/* "Let's work together" Pill Button */}
           <a
