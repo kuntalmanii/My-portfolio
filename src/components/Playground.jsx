@@ -232,7 +232,7 @@ export default function Playground() {
   ]
 
   return (
-    <section id="playground" className="bg-white dark:bg-[#0E131F] py-16 sm:py-24 border-t-2 border-[#111827] dark:border-white/10 transition-colors duration-200 scroll-mt-24 sm:scroll-mt-28">
+    <section id="playground" className="bg-transparent py-16 sm:py-24 border-t-2 border-[#111827] dark:border-white/10 transition-colors duration-200 scroll-mt-24 sm:scroll-mt-28">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}

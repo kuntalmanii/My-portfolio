@@ -24,7 +24,7 @@ export default function Capabilities() {
   ]
 
   return (
-    <section id="capabilities" className="bg-[#F9F8F5] dark:bg-[#0E131F] py-12 sm:py-16 transition-colors duration-200 scroll-mt-24 sm:scroll-mt-28">
+    <section id="capabilities" className="bg-transparent py-12 sm:py-16 transition-colors duration-200 scroll-mt-24 sm:scroll-mt-28">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Full-width callout container using the surface token (#88C999) */}

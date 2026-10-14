@@ -19,7 +19,7 @@ export default function Footer({ onOpenTerminal, onOpenCommandPalette }) {
   }
 
   return (
-    <footer id="contact" className="bg-[#F9F8F5] dark:bg-[#0E131F] border-t-2 border-[#111827] dark:border-white/10 transition-colors duration-200 scroll-mt-24 sm:scroll-mt-28">
+    <footer id="contact" className="bg-transparent border-t-2 border-[#111827] dark:border-white/10 transition-colors duration-200 scroll-mt-24 sm:scroll-mt-28">
       
       {/* Callout Section: "Let's work together." */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">

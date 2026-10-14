@@ -1,16 +1,12 @@
 import { ArrowUpRight, ArrowDown, Terminal, Layers, CheckCircle2, Sparkles } from 'lucide-react'
-import AnimatedBackground from './AnimatedBackground'
 import ScrollReveal from './ScrollReveal'
 
 export default function Hero({ onOpenTerminal }) {
   return (
     <section
       id="home"
-      className="relative min-h-[calc(100vh-5rem)] pt-28 sm:pt-36 pb-16 lg:pb-24 flex items-center bg-[#F9F8F5] dark:bg-[#0E131F] transition-colors duration-200 overflow-hidden scroll-mt-28"
+      className="relative min-h-[calc(100vh-5rem)] pt-28 sm:pt-36 pb-16 lg:pb-24 flex items-center bg-transparent transition-colors duration-200 overflow-hidden scroll-mt-28"
     >
-      {/* Dynamic animated background: aurora blobs + particle network + retro grid + noise grain */}
-      <AnimatedBackground showParticles={true} showGrid={true} />
-
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           

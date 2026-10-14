@@ -9,6 +9,7 @@ import {
   CommandPalette,
   CaseStudyModal,
   InteractiveTerminal,
+  AnimatedBackground,
 } from './components'
 import { ThemeProvider, useTheme } from './context/ThemeContext'
 import './index.css'
@@ -56,7 +57,10 @@ function PortfolioApp() {
   }, [toggleTheme])
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F9F8F5] dark:bg-[#0E131F] text-[#111827] dark:text-[#F9F8F5] transition-colors duration-200">
+    <div className="min-h-screen flex flex-col bg-[#F9F8F5] dark:bg-[#0E131F] text-[#111827] dark:text-[#F9F8F5] transition-colors duration-200 relative overflow-x-hidden">
+      {/* Full-Length Dynamic Ambient Background (Viewport Fixed) */}
+      <AnimatedBackground showParticles={true} showGrid={true} fixed={true} />
+
       {/* Navigation */}
       <Navbar
         onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
@@ -64,7 +68,7 @@ function PortfolioApp() {
       />
 
       {/* Main Content Sections */}
-      <main className="flex-1">
+      <main className="flex-1 relative z-10">
         <Hero onOpenTerminal={() => setIsTerminalOpen(true)} />
         <Capabilities />
         <FeaturedProjects onOpenCaseStudy={(proj) => setSelectedCaseStudy(proj)} />
@@ -72,10 +76,12 @@ function PortfolioApp() {
       </main>
 
       {/* Footer */}
-      <Footer
-        onOpenTerminal={() => setIsTerminalOpen(true)}
-        onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
-      />
+      <div className="relative z-10">
+        <Footer
+          onOpenTerminal={() => setIsTerminalOpen(true)}
+          onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+        />
+      </div>
 
       {/* 1. ⌘K Command Palette Dialog */}
       <CommandPalette
