@@ -1,66 +1,66 @@
 /**
  * src/data/projectsData.js
  *
- * Core projects data sourced from github.com/kuntalmanii.
+ * Flagship repositories from github.com/kuntalmanii.
  */
 
 export const projectsData = [
   {
-    id: 'ai-resume-analyzer',
-    title: 'AI Resume Analyzer & Builder',
-    category: 'AI / Full-Stack',
-    status: 'Featured ✦',
+    id: 'sahaay-isl-bridge',
+    title: 'Sahaay (सहाय) — On-Device ISL Bridge',
+    category: 'Edge AI / NPU Inference',
+    status: 'Snapdragon AI Lab ✦',
     statusVariant: 'primary',
     description:
-      'Real-time ATS parsing, theme generation, client-side AI analysis, and structured feedback powered by Google Gemini API.',
+      'Qualcomm Snapdragon AI Lab challenge. 100% offline, air-gapped Indian Sign Language recognition engine running on Snapdragon X Elite Hexagon NPU.',
     highlights: [
-      'Real-time ATS keyword parsing & scoring',
-      'Dynamic resume theme generator with export capabilities',
-      'Client-side Google Gemini API integration for intelligent resume optimization',
+      'Zero-cloud latency with 100% air-gapped on-device inference',
+      'Accelerated on Qualcomm Snapdragon X Elite Hexagon NPU (45 TOPS)',
+      'Real-time Indian Sign Language (ISL) gesture to speech/text translation',
     ],
-    tech: ['React', 'Tailwind', 'Google Gemini API', 'Node.js'],
-    githubUrl: 'https://github.com/kuntalmanii/Ai-resume-builder-',
-    liveUrl: 'https://github.com/kuntalmanii/Ai-resume-builder-',
-    previewType: 'resume',
-    accentColor: '#A79CFF',
+    tech: ['Qualcomm NPU', 'Python', 'Edge AI', 'ISL'],
+    githubUrl: 'https://github.com/kuntalmanii/saahay-HP-',
+    liveUrl: 'https://github.com/kuntalmanii/saahay-HP-',
+    previewType: 'sahaay',
+    accentColor: '#A79CFF', // Primary token
   },
   {
-    id: 'geo-accommodation-pg-finder',
-    title: 'Geo-Accommodation PG Finder',
-    category: 'Spatial / Web App',
-    status: 'Open Source',
-    statusVariant: 'secondary',
-    description:
-      'Nearby PG accommodation search engine using open-source mapping, interactive distance radius calculation, and real-time listing filters.',
-    highlights: [
-      'Interactive Leaflet API map pins with custom popup cards',
-      'Proximity-based search by college or workplace radius',
-      'Node.js & Express REST endpoints for accommodation data',
-    ],
-    tech: ['Leaflet API', 'JavaScript', 'Express', 'Node.js'],
-    githubUrl: 'https://github.com/kuntalmanii',
-    liveUrl: 'https://github.com/kuntalmanii',
-    previewType: 'map',
-    accentColor: '#F4B942',
-  },
-  {
-    id: 'pw-ioi-website-redesign',
-    title: 'PW IOI Website Redesign',
-    category: 'Design Engineering',
-    status: 'Case Study',
+    id: 'soulful-quartz',
+    title: 'SoulfulQuartz — Ethereal Gemstone Boutique',
+    category: 'E-Commerce / Full-Stack',
+    status: 'Next.js 15 App',
     statusVariant: 'surface',
     description:
-      'Full frontend redesign with 60 FPS animations, fluid typography, modern micro-interactions, and high-fidelity mobile responsiveness.',
+      'Full-stack Next.js 15 App Router boutique with TypeScript, Express + Prisma backend, React Context state, and interactive Crystal Advisor Quiz.',
     highlights: [
-      'Butter-smooth 60 FPS transitions via Framer Motion & GSAP',
-      'Decoupled TypeScript component architecture on Next.js',
-      'Mobile-first responsive layouts with hard drop shadow accents',
+      'Next.js 15 App Router with Server Components & TypeScript',
+      'Interactive Crystal Advisor Quiz with dynamic personalization engine',
+      'Robust Express + Prisma ORM relational database architecture',
     ],
-    tech: ['Next.js', 'TypeScript', 'Framer Motion', 'GSAP'],
-    githubUrl: 'https://github.com/kuntalmanii',
-    liveUrl: 'https://github.com/kuntalmanii',
-    previewType: 'redesign',
-    accentColor: '#88C999',
+    tech: ['Next.js 15', 'TypeScript', 'Prisma', 'Express'],
+    githubUrl: 'https://github.com/kuntalmanii/Soulfulquartz',
+    liveUrl: 'https://github.com/kuntalmanii/Soulfulquartz',
+    previewType: 'gemstone',
+    accentColor: '#88C999', // Surface token
+  },
+  {
+    id: 'recover-iq',
+    title: 'RecoverIQ — Razorpay Buildathon',
+    category: 'FinTech / Payment Infra',
+    status: 'Razorpay Buildathon ✦',
+    statusVariant: 'secondary',
+    description:
+      'Intelligent payment recovery platform featuring full-stack architecture, Role-Based Access Control (RBAC), and automated retry pipelines.',
+    highlights: [
+      'Automated smart retry pipelines for failed merchant transactions',
+      'Full-stack architecture with enterprise Role-Based Access Control (RBAC)',
+      'Real-time Razorpay webhook event streaming & transaction auditing',
+    ],
+    tech: ['React', 'Express', 'RBAC', 'FinTech'],
+    githubUrl: 'https://github.com/kuntalmanii/Razorpay-buildathon',
+    liveUrl: 'https://github.com/kuntalmanii/Razorpay-buildathon',
+    previewType: 'fintech',
+    accentColor: '#F4B942', // Secondary/Accent token
   },
 ]
 
