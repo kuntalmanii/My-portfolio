@@ -1,0 +1,350 @@
+/* ─── Google Fonts ─────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+/* ─── Tailwind v4 ───────────────────────────────────────────────────────────── */
+@import "tailwindcss";
+
+/* ─── Reference for @apply inside @layer ───────────────────────────────────── */
+@reference "tailwindcss";
+
+/* ─── Design Token Theme ───────────────────────────────────────────────────── */
+@theme {
+  /* Colors */
+  --color-primary:          #A79CFF;
+  --color-secondary:        #F4B942;
+  --color-accent:           #F4B942;
+  --color-background:       #F9F8F5;
+  --color-surface:          #88C999;
+  --color-text-primary:     #111827;
+  --color-text-secondary:   #4B5563;
+  --color-border:           #E5E7EB;
+
+  /* Border Radius */
+  --radius-card:    8px;
+  --radius-control: 8px;
+  --radius-pill:    9999px;
+
+  /* Font Families */
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body:    'Space Mono', monospace;
+  --font-mono:    'Space Mono', monospace;
+
+  /* Box Shadows — retro hard drop */
+  --shadow-hard:           4px 4px 0px 0px #111827;
+  --shadow-hard-sm:        2px 2px 0px 0px #111827;
+  --shadow-hard-lg:        6px 6px 0px 0px #111827;
+  --shadow-hard-primary:   4px 4px 0px 0px #A79CFF;
+  --shadow-hard-secondary: 4px 4px 0px 0px #F4B942;
+  --shadow-hard-surface:   4px 4px 0px 0px #88C999;
+
+  /* Animations */
+  --animate-fade-up:       fade-up 0.5s ease-out both;
+  --animate-fade-in:       fade-in 0.4s ease-out both;
+  --animate-slide-in-left: slide-in-left 0.5s ease-out both;
+  --animate-wiggle:        wiggle 0.4s ease-in-out;
+}
+
+/* ─── Keyframes ─────────────────────────────────────────────────────────────── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0);     }
+}
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-2deg); }
+  50%       { transform: rotate(2deg);  }
+}
+
+/* ─── Base Layer ────────────────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    line-height: 1.2;
+    color: var(--color-text-primary);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img, svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background-color: var(--color-primary);
+    color: #fff;
+  }
+}
+
+/* ─── Retro Hard Drop Shadow Utilities ─────────────────────────────────────── */
+/*
+ * Defined outside @layer so they are always available as plain CSS classes.
+ * These mirror the --shadow-* theme tokens and are the canonical way to apply
+ * hard drop shadows without using Tailwind's arbitrary-value syntax.
+ */
+
+.shadow-hard {
+  box-shadow: var(--shadow-hard);
+}
+.shadow-hard-sm {
+  box-shadow: var(--shadow-hard-sm);
+}
+.shadow-hard-lg {
+  box-shadow: var(--shadow-hard-lg);
+}
+.shadow-hard-primary {
+  box-shadow: var(--shadow-hard-primary);
+}
+.shadow-hard-secondary {
+  box-shadow: var(--shadow-hard-secondary);
+}
+.shadow-hard-surface {
+  box-shadow: var(--shadow-hard-surface);
+}
+
+/* Interactive variant — press effect */
+.shadow-hard-interactive {
+  box-shadow: var(--shadow-hard);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+.shadow-hard-interactive:hover {
+  box-shadow: var(--shadow-hard-sm);
+  transform: translate(2px, 2px);
+}
+.shadow-hard-interactive:active {
+  box-shadow: 0px 0px 0px 0px #111827;
+  transform: translate(4px, 4px);
+}
+
+/* ─── Component Utilities ───────────────────────────────────────────────────── */
+/*
+ * In Tailwind v4, @apply inside @layer components requires @reference "tailwindcss".
+ * To stay frictionless we use plain CSS vars + native properties here instead.
+ */
+
+/* ── Card ─────────────────────────────────────────────────────────────────── */
+.card {
+  background-color: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-hard);
+  padding: 1.5rem;
+}
+.card-surface {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-hard);
+  padding: 1.5rem;
+}
+
+/* ── Button Base ──────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1;
+  border-radius: var(--radius-control);
+  border: 2px solid var(--color-text-primary);
+  box-shadow: var(--shadow-hard);
+  cursor: pointer;
+  user-select: none;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+  text-decoration: none;
+}
+.btn:hover {
+  box-shadow: var(--shadow-hard-sm);
+  transform: translate(2px, 2px);
+}
+.btn:active {
+  box-shadow: 0px 0px 0px 0px #111827;
+  transform: translate(4px, 4px);
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-text-primary);
+}
+.btn-primary { composes: btn; }
+
+.btn-secondary {
+  background-color: var(--color-secondary);
+  color: var(--color-text-primary);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--color-text-primary);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: var(--color-text-primary);
+  border-color: transparent;
+  box-shadow: none;
+}
+.btn-ghost:hover {
+  background-color: rgba(0,0,0,0.05);
+  box-shadow: none;
+  transform: none;
+}
+
+/* ── Pill Badge ───────────────────────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border);
+  background-color: #fff;
+  box-shadow: var(--shadow-hard-sm);
+}
+.badge-primary {
+  background-color: var(--color-primary);
+  border-color: var(--color-text-primary);
+}
+.badge-secondary {
+  background-color: var(--color-secondary);
+  border-color: var(--color-text-primary);
+}
+
+/* ── Section wrapper ─────────────────────────────────────────────────────── */
+.section {
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+  padding-block: 4rem;
+}
+@media (min-width: 640px) {
+  .section { padding-inline: 1.5rem; }
+}
+@media (min-width: 1024px) {
+  .section {
+    padding-inline: 2rem;
+    padding-block: 6rem;
+  }
+}
+
+/* ── Section Headings ────────────────────────────────────────────────────── */
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+}
+.section-subtitle {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 2.5rem;
+}
+
+/* ── Form Controls ────────────────────────────────────────────────────────── */
+.input {
+  width: 100%;
+  padding: 0.625rem 1rem;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  background-color: #fff;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-control);
+  box-shadow: var(--shadow-hard-sm);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  color: var(--color-text-primary);
+}
+.input::placeholder {
+  color: var(--color-text-secondary);
+}
+.input:focus {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-hard-primary);
+}
+.textarea {
+  resize: none;
+  min-height: 120px;
+}
+
+/* ── Nav Link ─────────────────────────────────────────────────────────────── */
+.nav-link {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  transition: color 0.15s ease;
+}
+.nav-link:hover {
+  color: var(--color-text-primary);
+}
+.nav-link-active {
+  color: var(--color-text-primary);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--color-primary);
+}
+
+/* ─── Utility Extras ────────────────────────────────────────────────────────── */
+
+/* Animation delays */
+.animation-delay-100 { animation-delay: 100ms; }
+.animation-delay-200 { animation-delay: 200ms; }
+.animation-delay-300 { animation-delay: 300ms; }
+.animation-delay-400 { animation-delay: 400ms; }
+.animation-delay-500 { animation-delay: 500ms; }
+
+/* Gradient text */
+.text-gradient {
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Noise texture */
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+}
