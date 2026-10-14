@@ -62,6 +62,31 @@
   50%       { transform: rotate(2deg);  }
 }
 
+/* ── Aurora blob drift animations ──────────────────────────────────────────── */
+@keyframes aurora-drift-1 {
+  0%   { transform: translate(0px,   0px)   scale(1);    }
+  33%  { transform: translate(60px, -40px)  scale(1.08); }
+  66%  { transform: translate(-30px, 50px)  scale(0.94); }
+  100% { transform: translate(0px,   0px)   scale(1);    }
+}
+@keyframes aurora-drift-2 {
+  0%   { transform: translate(0px,   0px)   scale(1);    }
+  25%  { transform: translate(-70px, 30px)  scale(1.06); }
+  75%  { transform: translate(40px, -60px)  scale(0.96); }
+  100% { transform: translate(0px,   0px)   scale(1);    }
+}
+@keyframes aurora-drift-3 {
+  0%   { transform: translate(0px,   0px)   scale(1);    }
+  40%  { transform: translate(50px,  60px)  scale(1.10); }
+  80%  { transform: translate(-60px, 20px)  scale(0.92); }
+  100% { transform: translate(0px,   0px)   scale(1);    }
+}
+@keyframes aurora-drift-4 {
+  0%   { transform: translate(0px,  0px)    scale(1);    }
+  50%  { transform: translate(-40px,-50px)  scale(1.05); }
+  100% { transform: translate(0px,  0px)    scale(1);    }
+}
+
 /* ─── Base Layer ────────────────────────────────────────────────────────────── */
 @layer base {
   *, *::before, *::after {
@@ -348,3 +373,63 @@
 .bg-noise {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
 }
+
+/* ─── Aurora Blob Styles ─────────────────────────────────────────────────────── */
+.aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.28;
+  will-change: transform;
+  pointer-events: none;
+}
+
+/* Blob 1 — Primary purple, anchored top-left */
+.aurora-blob--1 {
+  width: 560px;
+  height: 560px;
+  top: -140px;
+  left: -120px;
+  background: radial-gradient(circle at 40% 40%, #A79CFF 0%, transparent 70%);
+  animation: aurora-drift-1 18s ease-in-out infinite;
+}
+
+/* Blob 2 — Accent yellow, anchored top-right */
+.aurora-blob--2 {
+  width: 480px;
+  height: 480px;
+  top: -100px;
+  right: -140px;
+  background: radial-gradient(circle at 60% 40%, #F4B942 0%, transparent 70%);
+  animation: aurora-drift-2 22s ease-in-out infinite;
+  opacity: 0.22;
+}
+
+/* Blob 3 — Surface green, bottom-center */
+.aurora-blob--3 {
+  width: 620px;
+  height: 420px;
+  bottom: -160px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(circle at 50% 60%, #88C999 0%, transparent 70%);
+  animation: aurora-drift-3 26s ease-in-out infinite;
+  opacity: 0.20;
+}
+
+/* Blob 4 — Small accent, mid-left */
+.aurora-blob--4 {
+  width: 260px;
+  height: 260px;
+  top: 40%;
+  left: 10%;
+  background: radial-gradient(circle at 50% 50%, #A79CFF 0%, transparent 70%);
+  animation: aurora-drift-4 14s ease-in-out infinite;
+  opacity: 0.18;
+}
+
+/* ── Reduce motion respect ────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .aurora-blob { animation: none !important; }
+}
+
