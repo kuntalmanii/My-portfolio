@@ -6,7 +6,7 @@ export default function Hero({ onOpenTerminal }) {
   return (
     <section
       id="home"
-      className="relative min-h-[calc(100vh-5rem)] pt-28 sm:pt-36 pb-16 lg:pb-24 flex items-center bg-[#F9F8F5] dark:bg-[#0E131F] transition-colors duration-200 overflow-hidden"
+      className="relative min-h-[calc(100vh-5rem)] pt-28 sm:pt-36 pb-16 lg:pb-24 flex items-center bg-[#F9F8F5] dark:bg-[#0E131F] transition-colors duration-200 overflow-hidden scroll-mt-28"
     >
       {/* Dynamic animated background: aurora blobs + particle network + retro grid + noise grain */}
       <AnimatedBackground showParticles={true} showGrid={true} />
