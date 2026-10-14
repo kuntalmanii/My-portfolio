@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   ExternalLink,
   GitFork,
@@ -11,9 +12,11 @@ import {
   RefreshCw,
   CheckCircle2,
   FileText,
+  RotateCcw,
 } from 'lucide-react'
 import { projectsData } from '../data/projectsData'
 import ScrollReveal from './ScrollReveal'
+import TechStackMatrix from './TechStackMatrix'
 
 // Visual Mockup Component customized for each flagship project
 function ProjectMockup({ type }) {
@@ -180,13 +183,48 @@ function ProjectMockup({ type }) {
 }
 
 export default function FeaturedProjects({ onOpenCaseStudy }) {
+  const [activeFilter, setActiveFilter] = useState('all')
+  const [activeTag, setActiveTag] = useState(null)
+
+  const handleResetFilter = () => {
+    setActiveFilter('all')
+    setActiveTag(null)
+  }
+
+  // Filter projects by domain category and active tag
+  const filteredProjects = projectsData.filter((project) => {
+    // 1. Tag filter
+    if (activeTag) {
+      const matchTag = project.tech.some(
+        (t) =>
+          t.toLowerCase() === activeTag.toLowerCase() ||
+          t.toLowerCase().includes(activeTag.toLowerCase()) ||
+          activeTag.toLowerCase().includes(t.toLowerCase())
+      )
+      if (!matchTag) return false
+    }
+
+    // 2. Domain category filter
+    if (activeFilter === 'edge-ai') {
+      return project.id === 'sahaay-isl-bridge' || project.category.toLowerCase().includes('edge ai')
+    }
+    if (activeFilter === 'nextjs') {
+      return project.id === 'soulful-quartz' || project.category.toLowerCase().includes('commerce')
+    }
+    if (activeFilter === 'fintech') {
+      return project.id === 'recover-iq' || project.category.toLowerCase().includes('fintech')
+    }
+
+    return true
+  })
+
   return (
     <section id="work" className="bg-transparent py-16 sm:py-24 border-t-2 border-[#111827] dark:border-white/10 transition-colors duration-200 scroll-mt-24 sm:scroll-mt-28">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <ScrollReveal direction="up" delay={0}>
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-8">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white dark:bg-[#161D2E] border-2 border-[#111827] dark:border-white/20 shadow-[2px_2px_0px_0px_#111827] dark:shadow-[2px_2px_0px_0px_#000000] font-mono text-xs font-bold text-[#111827] dark:text-white mb-3">
                 <Sparkles size={14} className="text-[#111827] dark:text-[#A79CFF]" />
@@ -213,9 +251,23 @@ export default function FeaturedProjects({ onOpenCaseStudy }) {
           </div>
         </ScrollReveal>
 
+        {/* ── Interactive Tech Stack Matrix & Architecture Filter ── */}
+        <ScrollReveal direction="up" delay={50}>
+          <TechStackMatrix
+            activeFilter={activeFilter}
+            activeTag={activeTag}
+            onSelectFilter={(filterId) => setActiveFilter(filterId)}
+            onSelectTag={(tag) => setActiveTag(tag)}
+            onResetFilter={handleResetFilter}
+            filteredCount={filteredProjects.length}
+            totalCount={projectsData.length}
+          />
+        </ScrollReveal>
+
         {/* Two-column responsive card grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {projectsData.map((project, idx) => {
+        {filteredProjects.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {filteredProjects.map((project, idx) => {
             const isLastOdd = idx === projectsData.length - 1 && projectsData.length % 2 !== 0
 
             return (
@@ -278,15 +330,28 @@ export default function FeaturedProjects({ onOpenCaseStudy }) {
                       )}
 
                       {/* Tech stack tags */}
-                      <div className="flex flex-wrap gap-2 pt-1">
-                        {project.tech.map((techItem) => (
-                          <span
-                            key={techItem}
-                            className="font-mono text-[11px] font-bold px-2.5 py-1 rounded-full bg-[#F9F8F5] dark:bg-[#0E131F] border border-[#111827] dark:border-white/20 text-[#111827] dark:text-white shadow-[1px_1px_0px_0px_#111827] dark:shadow-[1px_1px_0px_0px_#000000]"
-                          >
-                            {techItem}
-                          </span>
-                        ))}
+                      <div className="flex flex-wrap gap-1.5 sm:gap-2 pt-1">
+                        {project.tech.map((techItem) => {
+                          const isTagSelected =
+                            activeTag &&
+                            (techItem.toLowerCase().includes(activeTag.toLowerCase()) ||
+                              activeTag.toLowerCase().includes(techItem.toLowerCase()))
+                          return (
+                            <button
+                              key={techItem}
+                              type="button"
+                              onClick={() => setActiveTag(activeTag === techItem ? null : techItem)}
+                              title={`Filter projects by #${techItem}`}
+                              className={`font-mono text-[11px] font-bold px-2.5 py-1 rounded-full border transition-all cursor-pointer select-none ${
+                                isTagSelected
+                                  ? 'bg-[#F4B942] text-[#111827] border-[#111827] shadow-[2px_2px_0px_0px_#111827] scale-105'
+                                  : 'bg-[#F9F8F5] dark:bg-[#0E131F] border-[#111827] dark:border-white/20 text-[#111827] dark:text-white shadow-[1px_1px_0px_0px_#111827] dark:shadow-[1px_1px_0px_0px_#000000] hover:border-[#A79CFF]'
+                              }`}
+                            >
+                              #{techItem}
+                            </button>
+                          )
+                        })}
                       </div>
 
                     </div>
@@ -326,6 +391,27 @@ export default function FeaturedProjects({ onOpenCaseStudy }) {
             )
           })}
         </div>
+        ) : (
+          <div className="rounded-xl bg-white dark:bg-[#161D2E] border-2 border-[#111827] dark:border-white/20 shadow-[4px_4px_0px_0px_#111827] dark:shadow-[4px_4px_0px_0px_#000000] p-8 sm:p-12 text-center flex flex-col items-center justify-center gap-4 my-6">
+            <div className="w-12 h-12 rounded-full bg-[#F4B942]/20 border-2 border-[#111827] dark:border-white/20 flex items-center justify-center text-[#111827] dark:text-white shadow-[2px_2px_0px_0px_#111827]">
+              <RotateCcw size={20} />
+            </div>
+            <h3 className="font-display font-black text-xl text-[#111827] dark:text-white">
+              No Flagship Repositories Match "{activeTag || activeFilter}"
+            </h3>
+            <p className="font-mono text-xs sm:text-sm text-[#4B5563] dark:text-[#9CA3AF] max-w-md">
+              Try selecting another architectural domain or reset the filter to view all flagship repositories.
+            </p>
+            <button
+              type="button"
+              onClick={handleResetFilter}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[8px] font-mono text-xs font-bold text-[#111827] bg-[#A79CFF] hover:bg-[#F4B942] border-2 border-[#111827] shadow-[2px_2px_0px_0px_#111827] transition-all cursor-pointer"
+            >
+              <RotateCcw size={14} />
+              <span>Reset Filter (View All Projects)</span>
+            </button>
+          </div>
+        )}
 
         {/* Bottom CTA for full GitHub portfolio */}
         <ScrollReveal direction="up" delay={250}>
