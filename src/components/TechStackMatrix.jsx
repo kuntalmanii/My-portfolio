@@ -10,17 +10,16 @@ import {
   X,
   Sparkles,
   ArrowUpRight,
-  Check,
 } from 'lucide-react'
 
-export const DOMAIN_FILTERS = [
+const DOMAIN_FILTERS = [
   { id: 'all', label: 'All Architecture', icon: Layers },
   { id: 'edge-ai', label: 'Edge AI / NPU', icon: Cpu, match: ['Qualcomm NPU', 'Edge AI', 'ONNX Runtime', 'Python', 'ISL'] },
   { id: 'nextjs', label: 'Next.js 15 / Full-Stack', icon: Layers, match: ['Next.js 15', 'TypeScript', 'Prisma', 'Express', 'PostgreSQL'] },
   { id: 'fintech', label: 'FinTech / Payments', icon: ShieldCheck, match: ['FinTech', 'Razorpay API', 'RBAC', 'Express'] },
 ]
 
-export const ALL_TECH_TAGS = [
+const ALL_TECH_TAGS = [
   'Qualcomm NPU',
   'Next.js 15',
   'TypeScript',
@@ -34,7 +33,7 @@ export const ALL_TECH_TAGS = [
   'Tailwind CSS',
 ]
 
-export const ARCHITECTURE_DOMAINS = [
+const ARCHITECTURE_DOMAINS = [
   {
     id: 'edge-ai-domain',
     title: 'Edge AI & Hardware Acceleration',

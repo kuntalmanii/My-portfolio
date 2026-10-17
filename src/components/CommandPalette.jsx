@@ -259,11 +259,25 @@ export default function CommandPalette({
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [isOpen, selectedIndex, filteredCommands, onClose])
 
-  // Focus input on open & reset
-  useEffect(() => {
+  // Adjust state during render when isOpen or query changes (official React pattern)
+  const [prevIsOpen, setPrevIsOpen] = useState(isOpen)
+  if (isOpen !== prevIsOpen) {
+    setPrevIsOpen(isOpen)
     if (isOpen) {
       setQuery('')
       setSelectedIndex(0)
+    }
+  }
+
+  const [prevQuery, setPrevQuery] = useState(query)
+  if (query !== prevQuery) {
+    setPrevQuery(query)
+    setSelectedIndex(0)
+  }
+
+  // Focus input on open & manage body scroll lock
+  useEffect(() => {
+    if (isOpen) {
       setTimeout(() => inputRef.current?.focus(), 50)
       document.body.style.overflow = 'hidden'
     } else {
@@ -273,11 +287,6 @@ export default function CommandPalette({
       document.body.style.overflow = 'unset'
     }
   }, [isOpen])
-
-  // Reset selected index when query changes
-  useEffect(() => {
-    setSelectedIndex(0)
-  }, [query])
 
   if (!isOpen) return null
 

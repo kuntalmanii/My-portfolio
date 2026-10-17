@@ -11,9 +11,7 @@ import {
   MapPin,
   Mail,
   Award,
-  Briefcase,
   GraduationCap,
-  Code2,
   Terminal,
 } from 'lucide-react'
 import { resumeData, generateAtsPlainText } from '../data/resumeData'

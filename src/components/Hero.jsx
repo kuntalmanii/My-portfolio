@@ -1,4 +1,4 @@
-import { ArrowUpRight, ArrowDown, Terminal, Layers, CheckCircle2, Sparkles, FileText } from 'lucide-react'
+import { ArrowUpRight, ArrowDown, Terminal, Layers, CheckCircle2, FileText } from 'lucide-react'
 import ScrollReveal from './ScrollReveal'
 
 export default function Hero({ onOpenTerminal, onOpenResume }) {

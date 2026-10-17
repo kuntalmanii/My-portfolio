@@ -11,15 +11,14 @@ import {
   Clock,
   MapPin,
   Radio,
-  ExternalLink,
-  Code2,
   ShieldCheck,
   Sun,
   Moon,
-  Layers,
 } from 'lucide-react'
 import ScrollReveal from './ScrollReveal'
 import { useTheme } from '../context/ThemeContext'
+
+const CURRENT_YEAR = new Date().getFullYear()
 
 // Official SVG Brand Logos for pixel-perfect presentation
 function GithubIcon({ className = 'w-4 h-4' }) {
@@ -500,7 +499,7 @@ export default function Footer({ onOpenTerminal, onOpenCommandPalette }) {
               MK
             </button>
             <p className="font-mono text-xs text-[#E5E7EB]">
-              &copy; {new Date().getFullYear()} Manish Kuntal &bull; Product Developer &amp; Designer
+              &copy; {CURRENT_YEAR} Manish Kuntal &bull; Product Developer &amp; Designer
             </p>
           </div>
 

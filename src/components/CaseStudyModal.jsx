@@ -1,12 +1,9 @@
 import { useState, useEffect } from 'react'
 import {
   X,
-  ExternalLink,
   GitFork,
   ArrowUpRight,
   Layers,
-  Cpu,
-  ShieldCheck,
   CheckCircle2,
   Sparkles,
   BarChart3,

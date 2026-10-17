@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Terminal as TerminalIcon, X, Minimize2, Maximize2, Sparkles, Check, CornerDownLeft } from 'lucide-react'
+import { Terminal as TerminalIcon, X } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
 import { projectsData } from '../data/projectsData'
 

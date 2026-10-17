@@ -9,8 +9,6 @@ import {
   Command,
   Terminal,
   Search,
-  CheckCircle2,
-  Code2,
   FileText,
 } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'

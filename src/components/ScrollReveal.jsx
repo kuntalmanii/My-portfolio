@@ -14,16 +14,16 @@ export default function ScrollReveal({
   as: Component = 'div',
   ...rest
 }) {
-  const [isRevealed, setIsRevealed] = useState(false)
+  const [isRevealed, setIsRevealed] = useState(() => {
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return true
+    }
+    return false
+  })
   const domRef = useRef(null)
 
   useEffect(() => {
-    // Immediate reveal if user prefers reduced motion
-    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setIsRevealed(true)
-      return
-    }
-
+    if (isRevealed) return
     const element = domRef.current
     if (!element) return
 
@@ -53,7 +53,7 @@ export default function ScrollReveal({
     return () => {
       if (element) observer.unobserve(element)
     }
-  }, [threshold])
+  }, [threshold, isRevealed])
 
   const getTransform = () => {
     if (isRevealed) return 'translate3d(0, 0, 0) scale(1)'
