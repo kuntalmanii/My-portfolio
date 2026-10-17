@@ -232,7 +232,7 @@ export default function Playground() {
   ]
 
   return (
-    <section id="playground" className="bg-transparent py-16 sm:py-24 border-t-2 border-[#111827] dark:border-white/10 transition-colors duration-200 scroll-mt-24 sm:scroll-mt-28">
+    <section id="playground" className="bg-transparent py-16 sm:py-24 border-t-2 border-[#111827] dark:border-white/10 transition-colors duration-200 scroll-mt-24 sm:scroll-mt-28 section-deferred">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -261,7 +261,7 @@ export default function Playground() {
         {/* 3-Column Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {experiments.map((exp, idx) => (
-            <ScrollReveal key={exp.id} direction="up" delay={100 * (idx + 1)}>
+            <ScrollReveal key={exp.id} direction="up" delay={idx * 30}>
               <article
                 className="h-full bg-white dark:bg-[#161D2E] rounded-[8px] border-2 border-[#111827] dark:border-white/20 shadow-[4px_4px_0px_0px_#111827] dark:shadow-[4px_4px_0px_0px_#000000] hover:shadow-[6px_6px_0px_0px_#111827] dark:hover:shadow-[6px_6px_0px_0px_#A79CFF] hover:-translate-x-1 hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between overflow-hidden group"
               >

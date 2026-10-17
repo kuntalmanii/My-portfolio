@@ -24,7 +24,7 @@ export default function Capabilities() {
   ]
 
   return (
-    <section id="capabilities" className="bg-transparent py-12 sm:py-16 transition-colors duration-200 scroll-mt-24 sm:scroll-mt-28">
+    <section id="capabilities" className="bg-transparent py-12 sm:py-16 transition-colors duration-200 scroll-mt-24 sm:scroll-mt-28 section-deferred">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Full-width callout container using the surface token (#88C999) */}
@@ -64,7 +64,7 @@ export default function Capabilities() {
               {/* 3 Pillars Grid */}
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 pt-2">
                 {pillars.map(({ icon: Icon, title, description, tag }, index) => (
-                  <ScrollReveal key={title} direction="up" delay={80 * (index + 1)}>
+                  <ScrollReveal key={title} direction="up" delay={index * 30}>
                     <div className="h-full bg-white dark:bg-[#161D2E] rounded-[8px] border-2 border-[#111827] dark:border-white/20 shadow-[3px_3px_0px_0px_#111827] dark:shadow-[3px_3px_0px_0px_#000000] p-5 flex flex-col justify-between hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#111827] transition-all">
                       <div>
                         <div className="flex items-center justify-between mb-3">

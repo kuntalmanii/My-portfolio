@@ -21,12 +21,14 @@ import {
 } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
 import { projectsData } from '../data/projectsData'
+import { generateAtsPlainText } from '../data/resumeData'
 
 export default function CommandPalette({
   isOpen,
   onClose,
   onOpenTerminal,
   onOpenCaseStudy,
+  onOpenResume,
 }) {
   const [query, setQuery] = useState('')
   const [selectedIndex, setSelectedIndex] = useState(0)
@@ -124,6 +126,37 @@ export default function CommandPalette({
     })),
 
     // ── Actions & Tools ──
+    {
+      id: 'action-resume',
+      group: 'Actions & Tools',
+      title: 'Open ATS Resume & Credentials',
+      subtitle: 'Formatted sheet, ATS plaintext export & PDF print view',
+      icon: FileText,
+      shortcut: 'R',
+      action: () => {
+        onClose()
+        if (onOpenResume) {
+          setTimeout(() => onOpenResume(), 100)
+        }
+      },
+    },
+    {
+      id: 'action-copy-ats',
+      group: 'Actions & Tools',
+      title: 'Copy Plaintext Resume for ATS',
+      subtitle: 'Optimized for Workday, Greenhouse & Lever job portals',
+      icon: Copy,
+      action: async () => {
+        try {
+          const atsText = generateAtsPlainText()
+          await navigator.clipboard.writeText(atsText)
+          alert('✓ Plaintext ATS Resume copied to clipboard!')
+          onClose()
+        } catch (e) {
+          console.error(e)
+        }
+      },
+    },
     {
       id: 'action-theme',
       group: 'Actions & Tools',

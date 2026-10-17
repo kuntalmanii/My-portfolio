@@ -399,12 +399,19 @@
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
 }
 
+/* ─── Modern Scroll Performance Optimization (content-visibility) ───────────── */
+.section-deferred {
+  content-visibility: auto;
+  contain-intrinsic-size: auto none auto 700px;
+}
+
 /* ─── Aurora Blob Styles ─────────────────────────────────────────────────────── */
 .aurora-blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(80px);
+  filter: blur(52px);
   opacity: 0.28;
+  transform: translateZ(0);
   will-change: transform;
   pointer-events: none;
 }
@@ -511,6 +518,84 @@ html.dark .aurora-blob {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+  }
+}
+
+/* ─── ATS Printable Resume Styles (@media print) ────────────────────────── */
+@media print {
+  /* Hide all interactive site elements, backgrounds and navigation */
+  body {
+    background: #ffffff !important;
+    color: #111827 !important;
+    font-size: 11pt !important;
+    line-height: 1.4 !important;
+  }
+
+  header,
+  nav,
+  footer,
+  main,
+  .print\:hidden,
+  [role="dialog"] > div:first-child,
+  .aurora-bg,
+  canvas {
+    display: none !important;
+  }
+
+  /* Expand the resume modal into full printable page */
+  [role="dialog"] {
+    position: static !important;
+    display: block !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    box-shadow: none !important;
+  }
+
+  [role="dialog"] > div:last-child {
+    max-height: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    overflow: visible !important;
+  }
+
+  #printable-resume-container {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    background: transparent !important;
+    color: #111827 !important;
+  }
+
+  /* High contrast monochrome text */
+  #printable-resume-container * {
+    color: #111827 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-color: #d1d5db !important;
+  }
+
+  #printable-resume-container h1,
+  #printable-resume-container h2,
+  #printable-resume-container h3,
+  #printable-resume-container h4 {
+    color: #000000 !important;
+  }
+
+  /* Prevent awkward page breaks inside project entries */
+  #printable-resume-container section,
+  #printable-resume-container .space-y-6 > div {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  @page {
+    margin: 1.5cm;
+    size: auto;
   }
 }
 

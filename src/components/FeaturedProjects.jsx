@@ -219,7 +219,7 @@ export default function FeaturedProjects({ onOpenCaseStudy }) {
   })
 
   return (
-    <section id="work" className="bg-transparent py-16 sm:py-24 border-t-2 border-[#111827] dark:border-white/10 transition-colors duration-200 scroll-mt-24 sm:scroll-mt-28">
+    <section id="work" className="bg-transparent py-16 sm:py-24 border-t-2 border-[#111827] dark:border-white/10 transition-colors duration-200 scroll-mt-24 sm:scroll-mt-28 section-deferred">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -274,7 +274,7 @@ export default function FeaturedProjects({ onOpenCaseStudy }) {
               <ScrollReveal
                 key={project.id}
                 direction="up"
-                delay={100 * (idx + 1)}
+                delay={idx * 30}
                 className={isLastOdd ? 'md:col-span-2' : ''}
               >
                 <article

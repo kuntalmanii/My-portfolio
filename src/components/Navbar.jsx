@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import {
   Menu,
   X,
@@ -11,14 +11,15 @@ import {
   Search,
   CheckCircle2,
   Code2,
+  FileText,
 } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
 
-export default function Navbar({ onOpenCommandPalette, onOpenTerminal }) {
+export default function Navbar({ onOpenCommandPalette, onOpenTerminal, onOpenResume }) {
   const [activeSection, setActiveSection] = useState('home')
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [scrollProgress, setScrollProgress] = useState(0)
   const [isScrolled, setIsScrolled] = useState(false)
+  const progressBarRef = useRef(null)
   const { theme, toggleTheme } = useTheme()
 
   const navItems = [
@@ -28,41 +29,62 @@ export default function Navbar({ onOpenCommandPalette, onOpenTerminal }) {
     { id: 'contact', label: 'Contact', num: '04', href: '#contact' },
   ]
 
-  // Track active section via scroll spy and reading progress percentage
+  // Track active section efficiently using native IntersectionObserver (no layout recalculations on scroll)
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight
-      const currentScroll = window.scrollY
-
-      // Reading progress percentage (0 - 100%)
-      if (scrollHeight > 0) {
-        const pct = Math.min(100, Math.max(0, (currentScroll / scrollHeight) * 100))
-        setScrollProgress(pct)
-      }
-
-      setIsScrolled(currentScroll > 20)
-
-      // Dynamic Scroll Spy
-      if (currentScroll < 120) {
-        setActiveSection('home')
-      } else {
-        const sectionIds = ['contact', 'playground', 'work', 'home']
-        for (const id of sectionIds) {
-          const el = document.getElementById(id)
-          if (el) {
-            const rect = el.getBoundingClientRect()
-            if (rect.top <= Math.min(320, window.innerHeight * 0.45)) {
-              setActiveSection(id)
-              break
-            }
+    const sectionIds = ['home', 'work', 'playground', 'contact']
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id)
           }
         }
+      },
+      {
+        rootMargin: '-20% 0px -55% 0px',
+        threshold: 0,
+      }
+    )
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id)
+      if (el) observer.observe(el)
+    })
+
+    return () => observer.disconnect()
+  }, [])
+
+  // High-performance RAF scroll tracker for dock shadow & progress bar (zero React re-renders during scroll)
+  useEffect(() => {
+    let rafId = null
+
+    const updateScrollMetrics = () => {
+      const currentScroll = window.scrollY
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight
+
+      if (progressBarRef.current && scrollHeight > 0) {
+        const pct = Math.min(100, Math.max(0, (currentScroll / scrollHeight) * 100))
+        progressBarRef.current.style.width = `${pct}%`
+      }
+
+      const isPast = currentScroll > 20
+      setIsScrolled((prev) => (prev !== isPast ? isPast : prev))
+      rafId = null
+    }
+
+    const handleScroll = () => {
+      if (!rafId) {
+        rafId = requestAnimationFrame(updateScrollMetrics)
       }
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
-    handleScroll()
-    return () => window.removeEventListener('scroll', handleScroll)
+    updateScrollMetrics()
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      if (rafId) cancelAnimationFrame(rafId)
+    }
   }, [])
 
   // Close mobile drawer on Escape key or window resize >= 768px
@@ -111,16 +133,13 @@ export default function Navbar({ onOpenCommandPalette, onOpenTerminal }) {
               : 'shadow-[3px_3px_0px_0px_#111827] dark:shadow-[3px_3px_0px_0px_#000000]'
           }`}
         >
-          {/* Live Scroll Reading Progress Indicator Line with glowing head */}
+          {/* Live Scroll Reading Progress Indicator Line with zero-rerender ref */}
           <div
-            className="absolute bottom-0 left-0 h-[3px] bg-gradient-to-r from-[#A79CFF] via-[#F4B942] to-[#88C999] transition-all duration-75 pointer-events-none"
-            style={{ width: `${scrollProgress}%` }}
+            ref={progressBarRef}
+            className="absolute bottom-0 left-0 h-[3px] bg-gradient-to-r from-[#A79CFF] via-[#F4B942] to-[#88C999] pointer-events-none w-0"
+            style={{ willChange: 'width' }}
             aria-hidden="true"
-          >
-            {scrollProgress > 1 && scrollProgress < 99 && (
-              <span className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#88C999] shadow-[0_0_8px_#88C999]" />
-            )}
-          </div>
+          />
 
           {/* ── Brand Logo / Monogram Block ── */}
           <a
@@ -218,6 +237,21 @@ export default function Navbar({ onOpenCommandPalette, onOpenTerminal }) {
               </kbd>
             </button>
 
+            {/* ATS Resume Drawer Launcher (R) */}
+            <button
+              type="button"
+              onClick={onOpenResume}
+              aria-label="Open ATS Resume and Profile (R)"
+              title="View ATS Resume & Credentials (R)"
+              className="group flex items-center gap-1.5 px-2.5 lg:px-3 py-1.5 rounded-[8px] border-2 border-[#111827] dark:border-white/20 bg-white dark:bg-[#161D2E] text-[#111827] dark:text-white shadow-[2px_2px_0px_0px_#111827] dark:shadow-[2px_2px_0px_0px_#000000] hover:bg-[#88C999] hover:text-[#111827] dark:hover:bg-[#88C999] dark:hover:text-[#111827] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_0px_#111827] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_0px_#111827] transition-all cursor-pointer font-mono text-xs font-bold"
+            >
+              <FileText size={14} className="text-[#88C999] group-hover:text-[#111827] group-hover:scale-110 transition-transform" />
+              <span>Resume</span>
+              <span className="hidden xl:inline text-[9px] px-1 py-0.5 rounded bg-[#88C999] text-[#111827] font-mono font-bold">
+                ATS
+              </span>
+            </button>
+
             {/* Interactive Terminal Quick Launcher */}
             <button
               type="button"
@@ -258,6 +292,17 @@ export default function Navbar({ onOpenCommandPalette, onOpenTerminal }) {
 
           {/* ── Mobile Action Cluster (< md) ── */}
           <div className="flex md:hidden items-center gap-1.5">
+            {/* Quick Resume */}
+            <button
+              type="button"
+              onClick={onOpenResume}
+              aria-label="Open ATS Resume"
+              title="View Resume (R)"
+              className="p-2 rounded-[6px] border-2 border-[#111827] dark:border-white/20 bg-white dark:bg-[#161D2E] text-[#88C999] hover:bg-[#88C999] hover:text-[#111827] shadow-[2px_2px_0px_0px_#111827] dark:shadow-[2px_2px_0px_0px_#000000] active:translate-y-0.5 transition-all"
+            >
+              <FileText size={14} />
+            </button>
+
             {/* Quick Search */}
             <button
               type="button"
@@ -350,13 +395,31 @@ export default function Navbar({ onOpenCommandPalette, onOpenTerminal }) {
             </ul>
 
             {/* Quick Actions Grid in Drawer */}
-            <div className="grid grid-cols-2 gap-2 pt-2 border-t border-[#E5E7EB] dark:border-white/10">
+            <div className="pt-2 border-t border-[#E5E7EB] dark:border-white/10 space-y-2">
               <button
                 type="button"
                 onClick={() => {
                   setIsMobileMenuOpen(false)
-                  setTimeout(() => onOpenCommandPalette(), 120)
+                  setTimeout(() => onOpenResume(), 120)
                 }}
+                className="w-full flex items-center justify-between p-3 rounded-[8px] border-2 border-[#111827] dark:border-white/20 bg-[#88C999] text-[#111827] font-mono text-xs font-bold shadow-[2px_2px_0px_0px_#111827] active:translate-y-0.5 cursor-pointer"
+              >
+                <div className="flex items-center gap-2">
+                  <FileText size={15} />
+                  <span>View ATS Resume &amp; Profile</span>
+                </div>
+                <span className="px-1.5 py-0.5 rounded bg-white text-[#111827] border border-[#111827] text-[10px]">
+                  ATS Ready
+                </span>
+              </button>
+
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false)
+                    setTimeout(() => onOpenCommandPalette(), 120)
+                  }}
                 className="flex items-center justify-center gap-2 p-2.5 rounded-[8px] border-2 border-[#111827] dark:border-white/20 bg-white dark:bg-[#161D2E] text-[#111827] dark:text-white font-mono text-xs font-bold shadow-[2px_2px_0px_0px_#111827] dark:shadow-[2px_2px_0px_0px_#000000] active:translate-y-0.5"
               >
                 <Command size={13} className="text-[#A79CFF]" />
@@ -375,8 +438,9 @@ export default function Navbar({ onOpenCommandPalette, onOpenTerminal }) {
                 <span>Terminal ( ` )</span>
               </button>
             </div>
+          </div>
 
-            {/* Direct Full-Width CTA */}
+          {/* Direct Full-Width CTA */}
             <a
               href="#contact"
               onClick={(e) => handleNavClick(e, '#contact', 'contact')}

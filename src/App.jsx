@@ -10,6 +10,7 @@ import {
   CaseStudyModal,
   InteractiveTerminal,
   AnimatedBackground,
+  ResumeModal,
 } from './components'
 import { ThemeProvider, useTheme } from './context/ThemeContext'
 import './index.css'
@@ -17,10 +18,11 @@ import './index.css'
 function PortfolioApp() {
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false)
   const [isTerminalOpen, setIsTerminalOpen] = useState(false)
+  const [isResumeOpen, setIsResumeOpen] = useState(false)
   const [selectedCaseStudy, setSelectedCaseStudy] = useState(null)
   const { toggleTheme } = useTheme()
 
-  // Global keyboard shortcuts (⌘K for command palette, ~ for terminal, T for theme)
+  // Global keyboard shortcuts (⌘K for command palette, ~ for terminal, T for theme, R for resume)
   useEffect(() => {
     const handleKeyDown = (e) => {
       const activeEl = document.activeElement
@@ -50,6 +52,11 @@ function PortfolioApp() {
       if (e.key.toLowerCase() === 't' && !e.metaKey && !e.ctrlKey && !e.altKey) {
         toggleTheme()
       }
+
+      // R key -> Resume Modal Toggle
+      if (e.key.toLowerCase() === 'r' && !e.metaKey && !e.ctrlKey && !e.altKey) {
+        setIsResumeOpen((prev) => !prev)
+      }
     }
 
     window.addEventListener('keydown', handleKeyDown)
@@ -65,11 +72,15 @@ function PortfolioApp() {
       <Navbar
         onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
         onOpenTerminal={() => setIsTerminalOpen(true)}
+        onOpenResume={() => setIsResumeOpen(true)}
       />
 
       {/* Main Content Sections */}
       <main className="flex-1 relative z-10">
-        <Hero onOpenTerminal={() => setIsTerminalOpen(true)} />
+        <Hero
+          onOpenTerminal={() => setIsTerminalOpen(true)}
+          onOpenResume={() => setIsResumeOpen(true)}
+        />
         <Capabilities />
         <FeaturedProjects onOpenCaseStudy={(proj) => setSelectedCaseStudy(proj)} />
         <Playground />
@@ -80,6 +91,7 @@ function PortfolioApp() {
         <Footer
           onOpenTerminal={() => setIsTerminalOpen(true)}
           onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+          onOpenResume={() => setIsResumeOpen(true)}
         />
       </div>
 
@@ -89,6 +101,7 @@ function PortfolioApp() {
         onClose={() => setIsCommandPaletteOpen(false)}
         onOpenTerminal={() => setIsTerminalOpen(true)}
         onOpenCaseStudy={(proj) => setSelectedCaseStudy(proj)}
+        onOpenResume={() => setIsResumeOpen(true)}
       />
 
       {/* 2. Interactive Terminal Easter Egg */}
@@ -96,6 +109,7 @@ function PortfolioApp() {
         isOpen={isTerminalOpen}
         onClose={() => setIsTerminalOpen(false)}
         onOpenCaseStudy={(proj) => setSelectedCaseStudy(proj)}
+        onOpenResume={() => setIsResumeOpen(true)}
       />
 
       {/* 3. Deep Dive Case Study Modal */}
@@ -103,6 +117,13 @@ function PortfolioApp() {
         project={selectedCaseStudy}
         isOpen={Boolean(selectedCaseStudy)}
         onClose={() => setSelectedCaseStudy(null)}
+      />
+
+      {/* 4. Interactive ATS & Printable Resume Drawer */}
+      <ResumeModal
+        isOpen={isResumeOpen}
+        onClose={() => setIsResumeOpen(false)}
+        onOpenTerminal={() => setIsTerminalOpen(true)}
       />
     </div>
   )

@@ -1,19 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 
 /**
-  * ScrollReveal component using IntersectionObserver for fluid, 60fps entrance reveals.
-  *
-  * @param {React.ReactNode} children - Contents to reveal
-  * @param {string} className - Additional CSS classes
-  * @param {number} delay - Animation delay in ms (for staggered grids)
-  * @param {number} threshold - Intersection threshold (default 0.15)
-  * @param {'up' | 'down' | 'left' | 'right' | 'scale' | 'none'} direction - Reveal style
-  */
+ * High-Performance ScrollReveal component using IntersectionObserver.
+ * Triggers entrance well BEFORE reaching viewport (rootMargin: 180px 0px)
+ * so content is already revealed and rendered with zero perceived delay on scroll.
+ */
 export default function ScrollReveal({
   children,
   className = '',
   delay = 0,
-  threshold = 0.12,
+  threshold = 0,
   direction = 'up',
   as: Component = 'div',
   ...rest
@@ -22,7 +18,7 @@ export default function ScrollReveal({
   const domRef = useRef(null)
 
   useEffect(() => {
-    // Immediate show if user prefers reduced motion
+    // Immediate reveal if user prefers reduced motion
     if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       setIsRevealed(true)
       return
@@ -30,6 +26,13 @@ export default function ScrollReveal({
 
     const element = domRef.current
     if (!element) return
+
+    // If element is already in or near viewport on mount, reveal instantly without delay
+    const rect = element.getBoundingClientRect()
+    if (rect.top <= window.innerHeight + 100) {
+      setIsRevealed(true)
+      return
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -39,8 +42,9 @@ export default function ScrollReveal({
         }
       },
       {
-        threshold,
-        rootMargin: '0px 0px -40px 0px',
+        threshold: 0,
+        // Pre-reveal 180px before entering viewport so user never sees a blank space
+        rootMargin: '180px 0px 60px 0px',
       }
     )
 
@@ -55,19 +59,22 @@ export default function ScrollReveal({
     if (isRevealed) return 'translate3d(0, 0, 0) scale(1)'
     switch (direction) {
       case 'up':
-        return 'translate3d(0, 28px, 0)'
+        return 'translate3d(0, 16px, 0)'
       case 'down':
-        return 'translate3d(0, -28px, 0)'
+        return 'translate3d(0, -16px, 0)'
       case 'left':
-        return 'translate3d(-28px, 0, 0)'
+        return 'translate3d(-16px, 0, 0)'
       case 'right':
-        return 'translate3d(28px, 0, 0)'
+        return 'translate3d(16px, 0, 0)'
       case 'scale':
-        return 'translate3d(0, 16px, 0) scale(0.96)'
+        return 'translate3d(0, 8px, 0) scale(0.98)'
       default:
         return 'translate3d(0, 0, 0)'
     }
   }
+
+  // Snappy delay (max 80ms) so staggered grids don't keep content invisible
+  const effectiveDelay = Math.min(delay, 80)
 
   return (
     <Component
@@ -76,8 +83,8 @@ export default function ScrollReveal({
       style={{
         opacity: isRevealed ? 1 : 0,
         transform: getTransform(),
-        transition: `opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms, transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`,
-        willChange: 'opacity, transform',
+        transition: `opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1) ${effectiveDelay}ms, transform 0.28s cubic-bezier(0.16, 1, 0.3, 1) ${effectiveDelay}ms`,
+        willChange: isRevealed ? 'auto' : 'opacity, transform',
       }}
       {...rest}
     >

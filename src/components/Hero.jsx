@@ -1,7 +1,7 @@
-import { ArrowUpRight, ArrowDown, Terminal, Layers, CheckCircle2, Sparkles } from 'lucide-react'
+import { ArrowUpRight, ArrowDown, Terminal, Layers, CheckCircle2, Sparkles, FileText } from 'lucide-react'
 import ScrollReveal from './ScrollReveal'
 
-export default function Hero({ onOpenTerminal }) {
+export default function Hero({ onOpenTerminal, onOpenResume }) {
   return (
     <section
       id="home"
@@ -23,7 +23,7 @@ export default function Hero({ onOpenTerminal }) {
             </ScrollReveal>
 
             {/* Huge display title in Space Grotesk: "PRODUCT DEVELOPER & DESIGNER" with mixed-case styling */}
-            <ScrollReveal direction="up" delay={80}>
+            <ScrollReveal direction="up" delay={20}>
               <h1 className="font-display font-black text-4xl sm:text-6xl md:text-7xl lg:text-[4.75rem] xl:text-[5.25rem] tracking-tight leading-[1.04] text-[#111827] dark:text-white">
                 <span className="block uppercase tracking-tight">PRODUCT DEVELOPER</span>
                 <span className="flex items-center flex-wrap gap-x-3 gap-y-1 mt-1 sm:mt-2">
@@ -38,7 +38,7 @@ export default function Hero({ onOpenTerminal }) {
             </ScrollReveal>
 
             {/* Role badge: "Frontend & Full-Stack Engineer" with primary color fill (#A79CFF), 8px radius, and solid shadow */}
-            <ScrollReveal direction="up" delay={140}>
+            <ScrollReveal direction="up" delay={40}>
               <button
                 type="button"
                 onClick={onOpenTerminal}
@@ -54,7 +54,7 @@ export default function Hero({ onOpenTerminal }) {
             </ScrollReveal>
 
             {/* Subtitle: 2-line description in Space Mono highlighting clean UI architecture and dynamic web apps */}
-            <ScrollReveal direction="up" delay={200}>
+            <ScrollReveal direction="up" delay={50}>
               <p className="font-mono text-sm sm:text-base text-[#4B5563] dark:text-[#9CA3AF] max-w-xl leading-relaxed">
                 Architecting clean UI architecture with reusable component systems.
                 <br className="hidden sm:inline" />
@@ -63,7 +63,7 @@ export default function Hero({ onOpenTerminal }) {
             </ScrollReveal>
 
             {/* Two buttons */}
-            <ScrollReveal direction="up" delay={260}>
+            <ScrollReveal direction="up" delay={60}>
               <div className="flex flex-wrap items-center gap-4 pt-2 w-full sm:w-auto">
                 {/* Button 1: "View my work" */}
                 <a
@@ -74,10 +74,22 @@ export default function Hero({ onOpenTerminal }) {
                   <ArrowUpRight size={18} className="text-[#111827]" />
                 </a>
 
-                {/* Button 2: "Scroll to explore" */}
+                {/* Button 2: "Resume / ATS" */}
+                {onOpenResume && (
+                  <button
+                    type="button"
+                    onClick={onOpenResume}
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-[8px] font-display font-bold text-sm sm:text-base text-[#111827] bg-[#88C999] hover:bg-[#A79CFF] border-2 border-[#111827] shadow-[4px_4px_0px_0px_#111827] dark:shadow-[4px_4px_0px_0px_#000000] hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#111827] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_0px_#111827] transition-all duration-150 cursor-pointer select-none group"
+                  >
+                    <FileText size={18} className="text-[#111827] group-hover:scale-110 transition-transform" />
+                    <span>Resume / ATS</span>
+                  </button>
+                )}
+
+                {/* Button 3: "Scroll to explore" */}
                 <a
                   href="#work"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-[8px] font-display font-bold text-sm sm:text-base text-[#111827] dark:text-white bg-white dark:bg-[#161D2E] border-2 border-[#111827] dark:border-white/20 shadow-[4px_4px_0px_0px_#111827] dark:shadow-[4px_4px_0px_0px_#000000] hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#111827] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_0px_#111827] transition-all duration-150 cursor-pointer select-none group"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-[8px] font-display font-bold text-sm sm:text-base text-[#111827] dark:text-white bg-white dark:bg-[#161D2E] border-2 border-[#111827] dark:border-white/20 shadow-[4px_4px_0px_0px_#111827] dark:shadow-[4px_4px_0px_0px_#000000] hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#111827] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_0px_#111827] transition-all duration-150 cursor-pointer select-none group"
                 >
                   <span>Scroll to explore</span>
                   <ArrowDown size={18} className="text-[#111827] dark:text-white group-hover:translate-y-0.5 transition-transform animate-bounce" />
@@ -86,7 +98,7 @@ export default function Hero({ onOpenTerminal }) {
             </ScrollReveal>
 
             {/* Quick tech stack tags */}
-            <ScrollReveal direction="up" delay={320}>
+            <ScrollReveal direction="up" delay={70}>
               <div className="flex items-center gap-2 flex-wrap pt-2">
                 <span className="font-mono text-xs text-[#4B5563] dark:text-[#9CA3AF] font-semibold mr-1">Focus:</span>
                 {['React', 'TypeScript', 'Tailwind CSS', 'Vite', 'Node.js', 'Qualcomm NPU'].map((item) => (
@@ -104,7 +116,7 @@ export default function Hero({ onOpenTerminal }) {
 
           {/* Right Column: Visual Showcase Card */}
           <div className="lg:col-span-5 flex justify-center lg:justify-end">
-            <ScrollReveal direction="scale" delay={180}>
+            <ScrollReveal direction="scale" delay={40}>
               <div className="relative w-full max-w-md">
                 
                 {/* Layered decorative background cards for depth */}

@@ -93,7 +93,7 @@ export default function Footer({ onOpenTerminal, onOpenCommandPalette }) {
   return (
     <footer
       id="contact"
-      className="bg-transparent border-t-2 border-[#111827] dark:border-white/10 transition-colors duration-200 scroll-mt-24 sm:scroll-mt-28 relative"
+      className="bg-transparent border-t-2 border-[#111827] dark:border-white/10 transition-colors duration-200 scroll-mt-24 sm:scroll-mt-28 relative section-deferred"
     >
       {/* ── Main Footer Container ── */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-24 pb-12 sm:pb-16 flex flex-col gap-16 sm:gap-20">

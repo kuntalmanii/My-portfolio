@@ -19,8 +19,8 @@ function ParticleCanvas() {
     const LIGHT_COLORS = ['#A79CFF', '#F4B942', '#88C999', '#4B5563']
     const DARK_COLORS  = ['#A79CFF', '#F4B942', '#88C999', '#E0E7FF']
 
-    // Responsive particle count based on viewport area
-    const COUNT = Math.min(85, Math.max(35, Math.floor((window.innerWidth * window.innerHeight) / 16000)))
+    // Responsive particle count optimized for smooth 60fps/120fps scrolling
+    const COUNT = Math.min(32, Math.max(16, Math.floor((window.innerWidth * window.innerHeight) / 45000)))
     const rnd = (min, max) => Math.random() * (max - min) + min
 
     let particles = []
@@ -35,11 +35,11 @@ function ParticleCanvas() {
       particles = Array.from({ length: COUNT }, () => ({
         x: rnd(0, canvas.width || window.innerWidth),
         y: rnd(0, canvas.height || window.innerHeight),
-        r: rnd(2, 4.5),
-        vx: rnd(-0.3, 0.3),
-        vy: rnd(-0.3, 0.3),
+        r: rnd(2, 3.5),
+        vx: rnd(-0.25, 0.25),
+        vy: rnd(-0.25, 0.25),
         color: colors[Math.floor(Math.random() * colors.length)],
-        alpha: rnd(0.25, 0.65),
+        alpha: rnd(0.25, 0.55),
         pulse: rnd(0, Math.PI * 2),
         pSpeed: rnd(0.006, 0.016),
       }))
@@ -53,7 +53,7 @@ function ParticleCanvas() {
     }
 
     resize()
-    window.addEventListener('resize', resize)
+    window.addEventListener('resize', resize, { passive: true })
 
     function onMouseMove(e) {
       mouseRef.current = { x: e.clientX, y: e.clientY }
@@ -63,7 +63,10 @@ function ParticleCanvas() {
     }
 
     window.addEventListener('mousemove', onMouseMove, { passive: true })
-    document.addEventListener('mouseleave', onMouseLeave)
+    document.addEventListener('mouseleave', onMouseLeave, { passive: true })
+
+    const maxConnectDist = 110
+    const maxConnectDistSq = maxConnectDist * maxConnectDist
 
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -74,14 +77,15 @@ function ParticleCanvas() {
       // 1. Draw and update particles
       for (const p of particles) {
         p.pulse += p.pSpeed
-        const rLive = p.r + Math.sin(p.pulse) * 0.5
+        const rLive = p.r + Math.sin(p.pulse) * 0.4
         const dx = p.x - mx
         const dy = p.y - my
-        const dist = Math.sqrt(dx * dx + dy * dy)
+        const distSq = dx * dx + dy * dy
 
         // Cursor repulsion
-        if (dist < 130 && dist > 0) {
-          const force = ((130 - dist) / 130) * 0.65
+        if (distSq < 16900 && distSq > 0) { // 130^2 = 16900
+          const dist = Math.sqrt(distSq)
+          const force = ((130 - dist) / 130) * 0.55
           p.x += (dx / dist) * force
           p.y += (dy / dist) * force
         }
@@ -102,19 +106,19 @@ function ParticleCanvas() {
         ctx.fill()
       }
 
-      // 2. Draw connecting constellation lines between nearby particles
+      // 2. Draw connecting constellation lines (O(N^2) with fast distSq rejection)
       ctx.globalAlpha = 1
-      const maxConnectDist = 110
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const a = particles[i]
           const b = particles[j]
           const dx = a.x - b.x
           const dy = a.y - b.y
-          const dist = Math.sqrt(dx * dx + dy * dy)
+          const distSq = dx * dx + dy * dy
 
-          if (dist < maxConnectDist) {
-            const opacity = (1 - dist / maxConnectDist) * (isDark ? 0.22 : 0.14)
+          if (distSq < maxConnectDistSq) {
+            const dist = Math.sqrt(distSq)
+            const opacity = (1 - dist / maxConnectDist) * (isDark ? 0.2 : 0.12)
             ctx.beginPath()
             ctx.moveTo(a.x, a.y)
             ctx.lineTo(b.x, b.y)
@@ -132,11 +136,21 @@ function ParticleCanvas() {
 
     draw()
 
+    const handleVisibility = () => {
+      if (document.hidden) {
+        if (frameRef.current) cancelAnimationFrame(frameRef.current)
+      } else {
+        frameRef.current = requestAnimationFrame(draw)
+      }
+    }
+    document.addEventListener('visibilitychange', handleVisibility)
+
     return () => {
       if (frameRef.current) cancelAnimationFrame(frameRef.current)
       window.removeEventListener('resize', resize)
       window.removeEventListener('mousemove', onMouseMove)
       document.removeEventListener('mouseleave', onMouseLeave)
+      document.removeEventListener('visibilitychange', handleVisibility)
     }
   }, [])
 
