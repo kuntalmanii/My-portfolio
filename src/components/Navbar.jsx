@@ -6,14 +6,12 @@ import {
   Sparkles,
   Sun,
   Moon,
-  Command,
   Terminal,
-  Search,
   FileText,
 } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
 
-export default function Navbar({ onOpenCommandPalette, onOpenTerminal, onOpenResume }) {
+export default function Navbar({ onOpenTerminal, onOpenResume }) {
   const [activeSection, setActiveSection] = useState('home')
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
@@ -217,24 +215,6 @@ export default function Navbar({ onOpenCommandPalette, onOpenTerminal, onOpenRes
 
           {/* ── Right Side Controls & Actions (md+) ── */}
           <div className="hidden md:flex items-center gap-2">
-            
-            {/* Quick Command Palette Button (⌘K) */}
-            <button
-              type="button"
-              onClick={onOpenCommandPalette}
-              aria-label="Search and commands (⌘K)"
-              title="Open Command Palette (⌘K)"
-              className="group flex items-center gap-2 px-2.5 lg:px-3 py-1.5 rounded-[8px] border-2 border-[#111827] dark:border-white/20 bg-white dark:bg-[#161D2E] text-[#111827] dark:text-white shadow-[2px_2px_0px_0px_#111827] dark:shadow-[2px_2px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_0px_#111827] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_0px_#111827] transition-all cursor-pointer font-mono text-xs font-bold"
-            >
-              <Search size={13} className="text-[#A79CFF] group-hover:scale-110 transition-transform" />
-              <span className="hidden lg:inline text-[#4B5563] dark:text-[#9CA3AF] font-normal">
-                Search
-              </span>
-              <kbd className="px-1.5 py-0.5 rounded bg-[#F9F8F5] dark:bg-black/40 border border-[#111827]/20 dark:border-white/15 text-[10px] text-[#111827] dark:text-white font-mono font-bold">
-                ⌘K
-              </kbd>
-            </button>
-
             {/* ATS Resume Drawer Launcher (R) */}
             <button
               type="button"
@@ -299,16 +279,6 @@ export default function Navbar({ onOpenCommandPalette, onOpenTerminal, onOpenRes
               className="p-2 rounded-[6px] border-2 border-[#111827] dark:border-white/20 bg-white dark:bg-[#161D2E] text-[#88C999] hover:bg-[#88C999] hover:text-[#111827] shadow-[2px_2px_0px_0px_#111827] dark:shadow-[2px_2px_0px_0px_#000000] active:translate-y-0.5 transition-all"
             >
               <FileText size={14} />
-            </button>
-
-            {/* Quick Search */}
-            <button
-              type="button"
-              onClick={onOpenCommandPalette}
-              aria-label="Open Command Palette"
-              className="p-2 rounded-[6px] border-2 border-[#111827] dark:border-white/20 bg-white dark:bg-[#161D2E] text-[#111827] dark:text-white shadow-[2px_2px_0px_0px_#111827] dark:shadow-[2px_2px_0px_0px_#000000] active:translate-y-0.5 transition-all"
-            >
-              <Search size={14} />
             </button>
 
             {/* Quick Terminal */}
@@ -411,32 +381,18 @@ export default function Navbar({ onOpenCommandPalette, onOpenTerminal, onOpenRes
                 </span>
               </button>
 
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false)
-                    setTimeout(() => onOpenCommandPalette(), 120)
-                  }}
-                className="flex items-center justify-center gap-2 p-2.5 rounded-[8px] border-2 border-[#111827] dark:border-white/20 bg-white dark:bg-[#161D2E] text-[#111827] dark:text-white font-mono text-xs font-bold shadow-[2px_2px_0px_0px_#111827] dark:shadow-[2px_2px_0px_0px_#000000] active:translate-y-0.5"
-              >
-                <Command size={13} className="text-[#A79CFF]" />
-                <span>Search ⌘K</span>
-              </button>
-
               <button
                 type="button"
                 onClick={() => {
                   setIsMobileMenuOpen(false)
                   setTimeout(() => onOpenTerminal(), 120)
                 }}
-                className="flex items-center justify-center gap-2 p-2.5 rounded-[8px] border-2 border-[#111827] dark:border-white/20 bg-white dark:bg-[#161D2E] text-[#111827] dark:text-white font-mono text-xs font-bold shadow-[2px_2px_0px_0px_#111827] dark:shadow-[2px_2px_0px_0px_#000000] active:translate-y-0.5"
+                className="w-full flex items-center justify-center gap-2 p-2.5 rounded-[8px] border-2 border-[#111827] dark:border-white/20 bg-white dark:bg-[#161D2E] text-[#111827] dark:text-white font-mono text-xs font-bold shadow-[2px_2px_0px_0px_#111827] dark:shadow-[2px_2px_0px_0px_#000000] active:translate-y-0.5 cursor-pointer"
               >
                 <Terminal size={13} className="text-[#88C999]" />
-                <span>Terminal ( ` )</span>
+                <span>Interactive Terminal ( ` )</span>
               </button>
             </div>
-          </div>
 
           {/* Direct Full-Width CTA */}
             <a

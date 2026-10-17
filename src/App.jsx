@@ -70,7 +70,6 @@ function PortfolioApp() {
 
       {/* Navigation */}
       <Navbar
-        onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
         onOpenTerminal={() => setIsTerminalOpen(true)}
         onOpenResume={() => setIsResumeOpen(true)}
       />
